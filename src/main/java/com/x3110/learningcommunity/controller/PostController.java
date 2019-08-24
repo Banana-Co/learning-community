@@ -16,5 +16,5 @@ public class PostController {
     public int addPost(@RequestBody Post post) {
         return postService.addPost(post);
     }
-    
+
 }
