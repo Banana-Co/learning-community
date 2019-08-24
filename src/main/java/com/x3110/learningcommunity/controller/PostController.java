@@ -17,8 +17,13 @@ public class PostController {
         return postService.addPost(post);
     }
 
-    @RequestMapping(value = "removePost",method = RequestMethod.DELETE)
-    public int removePost(@RequestBody String id){return postService.removePost(id);}
+    @RequestMapping(value = "removePost",method = RequestMethod.POST)
+    public int removePost(@RequestBody Long postId){return postService.removePost(postId);}
 
-    @RequestMapping(value = )
+    @RequestMapping(value = "updatePost",method = RequestMethod.POST)
+    public int updatePost(@RequestBody Post post){return postService.updatePost(post);}
+
+    @CrossOrigin
+    @RequestMapping(value = "findPostById={postId}",method = RequestMethod.GET)
+    public Post findPostById(@PathVariable (name="postId")Long postId){return postService.findPostById(postId);}
 }

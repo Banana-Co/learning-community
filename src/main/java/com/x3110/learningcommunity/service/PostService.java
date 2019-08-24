@@ -4,7 +4,7 @@ import com.x3110.learningcommunity.model.Post;
 
 public interface PostService {
     int addPost(Post post);
-    int removePost(String id);
+    int removePost(Long postId);
     int updatePost(Post post);
-    Post findPostById(String id);
+    Post findPostById(Long postId);
 }

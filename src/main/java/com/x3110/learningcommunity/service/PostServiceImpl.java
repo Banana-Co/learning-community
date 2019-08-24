@@ -22,14 +22,14 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public int removePost(String id){
-        mongoTemplate.remove(id);
+    public int removePost(Long postId){
+        mongoTemplate.remove(new Query(Criteria.where("id").is(findPostById(postId).getId())));
         return 1;
     }
 
     @Override
     public int updatePost(Post post){
-        Query query=new Query(Criteria.where("id").is(post.getId()));
+        Query query=new Query(Criteria.where("PostId").is(post.getPostId()));
         Update update=new Update();
         update.set("title",post.getTitle());
         update.set("content",post.getContent());
@@ -41,8 +41,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post findPostById(String id){
-        Query query=new Query(Criteria.where("id").is(id));
+    public Post findPostById(Long postId){
+        Query query=new Query(Criteria.where("postId").is(postId));
         Post post=mongoTemplate.findOne(query,Post.class);
         return post;
     }

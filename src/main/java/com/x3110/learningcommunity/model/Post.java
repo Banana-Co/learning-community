@@ -12,6 +12,8 @@ public class Post {
     @Id
     private String id;
 
+    private Long postId;
+
     private String title;
 
     private String content;
@@ -21,6 +23,14 @@ public class Post {
 
     public String getId() {
         return id;
+    }
+
+    public Long getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Long postId) {
+        this.postId = postId;
     }
 
     public void setId(String id) {
