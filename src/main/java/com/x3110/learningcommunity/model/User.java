@@ -4,6 +4,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Document(collection = "user")
@@ -15,8 +16,8 @@ public class User {
 
     private String password;
 
-    @CreatedDate
-    private LocalDateTime createdDate;
+    //@CreatedDate
+    private Timestamp createdDate;
 
     public String getId() {
         return id;
@@ -42,11 +43,11 @@ public class User {
         this.password = password;
     }
 
-    public LocalDateTime getCreatedDate() {
+    public Timestamp getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(LocalDateTime createdDate) {
+    public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
     }
 }

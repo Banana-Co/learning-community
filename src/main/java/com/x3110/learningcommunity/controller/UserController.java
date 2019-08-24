@@ -115,5 +115,13 @@ public class UserController {
         }
         return ResultFactory.buildSuccessResult("修改密码成功");
     }
-
+    /**
+     *向前端返回注册时间
+     * @return String
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/time", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    public String getTime(@RequestBody String username) {
+        return userService.getUserByUsername(username).getCreatedDate().toString();
+    }
 }

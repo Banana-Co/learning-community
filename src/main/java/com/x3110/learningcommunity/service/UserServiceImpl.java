@@ -9,6 +9,9 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 @Service
 @Primary
 public class UserServiceImpl implements UserService {
@@ -17,6 +20,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int addUser(User user) {
+        user.setCreatedDate(new Timestamp(new Date().getTime()));
         mongoTemplate.insert(user);
         return 1;
     }
@@ -35,6 +39,7 @@ public class UserServiceImpl implements UserService {
     public User getUserByUsername(String username) {
         Query query=new Query(Criteria.where("username").is(username));
         User user=mongoTemplate.findOne(query,User.class);
+        System.out.println(user.toString());
         return user;
 
     }
