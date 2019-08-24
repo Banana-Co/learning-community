@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
     @Autowired
     PostService postService;
+
+    @RequestMapping(value="addPost", method = RequestMethod.POST)
+    public int addPost(@RequestBody Post post) {
+        return postService.addPost(post);
+    }
     
     @RequestMapping(value = "removePost",method = RequestMethod.POST)
     public int removePost(@RequestBody Long postId){return postService.removePost(postId);}
