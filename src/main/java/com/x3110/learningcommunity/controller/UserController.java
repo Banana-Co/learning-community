@@ -18,7 +18,7 @@ import java.security.NoSuchAlgorithmException;
 public class UserController {
     @Autowired
     UserService userService;
-
+    @CrossOrigin
     @RequestMapping(value="addPost", method = RequestMethod.POST)
     public int addUser(@RequestBody User user) {
         return userService.addUser(user);
