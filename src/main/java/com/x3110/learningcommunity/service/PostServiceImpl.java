@@ -9,6 +9,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 @Primary
 public class PostServiceImpl implements PostService {
@@ -17,13 +19,14 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public int addPost(Post post) {
-        mongoTemplate.save(post);
+        mongoTemplate.insert(post);
         return 1;
     }
 
     @Override
     public int removePost(Long postId){
-        mongoTemplate.remove(new Query(Criteria.where("id").is(findPostById(postId).getId())));
+       Query query=new Query(Criteria.where("postId").is(postId));
+       mongoTemplate.remove(query,Post.class);
         return 1;
     }
 
@@ -33,8 +36,7 @@ public class PostServiceImpl implements PostService {
         Update update=new Update();
         update.set("title",post.getTitle());
         update.set("content",post.getContent());
-        update.set("createDate",post.getCreatedDate());
-
+        update.set("createdDate",new Date());
         mongoTemplate.updateFirst(query,update,Post.class);
 
         return 1;
