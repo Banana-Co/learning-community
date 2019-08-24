@@ -26,11 +26,7 @@ public class UserController {
 
     @CrossOrigin
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public Result login(@RequestBody User loginUser, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            String message = String.format("登录失败，详细信息[%s]", bindingResult.getFieldError().getDefaultMessage());
-            return ResultFactory.buildFailResult(message);
-        }
+    public Result login(@RequestBody User loginUser){
         User user = userService.getUserByUsername(loginUser.getUsername());
 
         try{
@@ -49,11 +45,7 @@ public class UserController {
 
     @CrossOrigin
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public Result registr(@RequestBody User registerUser, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            String message = String.format("注册失败，详细信息[%s]", bindingResult.getFieldError().getDefaultMessage());
-            return ResultFactory.buildFailResult(message);
-        }
+    public Result registr(@RequestBody User registerUser){
         User user = userService.getUserByUsername(registerUser.getUsername());
 
         if(user != null){
