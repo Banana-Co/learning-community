@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.time.LocalDateTime;
 
 @RestController
 //@RequestMapping("/api/user")
@@ -120,8 +121,8 @@ public class UserController {
      * @return String
      */
     @CrossOrigin
-    @RequestMapping(value = "/time", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
-    public String getTime(@RequestBody String username) {
-        return userService.getUserByUsername(username).getCreatedDate().toString();
+    @RequestMapping(value = "time={username}", method = RequestMethod.GET)
+    public String getTime(@PathVariable (name="username")String username) {
+        return userService.getUserByUsername(username).getRegisterDate().toString();
     }
 }

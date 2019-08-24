@@ -1,10 +1,9 @@
 package com.x3110.learningcommunity.model;
 
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.time.LocalDateTime;
 
 @Document(collection = "user")
@@ -17,7 +16,7 @@ public class User {
     private String password;
 
     //@CreatedDate
-    private Timestamp createdDate;
+    private LocalDateTime registerDate;
 
     public String getId() {
         return id;
@@ -43,11 +42,11 @@ public class User {
         this.password = password;
     }
 
-    public Timestamp getCreatedDate() {
-        return createdDate;
+    public LocalDateTime getRegisterDate() {
+        return registerDate;
     }
 
-    public void setCreatedDate(Timestamp createdDate) {
-        this.createdDate = createdDate;
+    public void setRegisterDate(LocalDateTime registerDate) {
+        this.registerDate = registerDate;
     }
 }

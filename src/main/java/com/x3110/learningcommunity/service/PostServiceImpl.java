@@ -32,7 +32,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public int updatePost(Post post){
-        Query query=new Query(Criteria.where("PostId").is(post.getPostId()));
+        Query query=new Query(Criteria.where("postId").is(post.getPostId()));
         Update update=new Update();
         update.set("title",post.getTitle());
         update.set("content",post.getContent());
