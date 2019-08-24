@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class Md5SaltTool {
 
     private static final String HEX_NUMS_STR="0123456789ABCDEF";
-    private static final Integer SALT_LENGTH = 12;
+    private static final Integer SALT_LENGTH = 3;
 
     /**
      * 将16进制字符串转换成字节数组

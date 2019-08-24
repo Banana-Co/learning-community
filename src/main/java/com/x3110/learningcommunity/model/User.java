@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Document(collection = "user")
 public class User {
     @Id
-    private String userId;
+    private String id;
 
     private String username;
 
@@ -18,12 +18,12 @@ public class User {
     @CreatedDate
     private LocalDateTime createdDate;
 
-    public String getUserId() {
-        return userId;
+    public String getId() {
+        return id;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setId(String userId) {
+        this.id = userId;
     }
 
     public String getUsername() {

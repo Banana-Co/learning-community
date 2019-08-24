@@ -19,13 +19,13 @@ public class UserController {
     @Autowired
     UserService userService;
     @CrossOrigin
-    @RequestMapping(value="addPost", method = RequestMethod.POST)
+    @RequestMapping(value="addUser", method = RequestMethod.POST)
     public int addUser(@RequestBody User user) {
         return userService.addUser(user);
     }
 
     @CrossOrigin
-    @RequestMapping(value = "login", method = RequestMethod.POST)
+    @RequestMapping(value = "login", method = RequestMethod.POST, produces = "application/json; charset = UTF-8")
     public Result login(@RequestBody User loginUser, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             String message = String.format("登录失败，详细信息[%s]", bindingResult.getFieldError().getDefaultMessage());
