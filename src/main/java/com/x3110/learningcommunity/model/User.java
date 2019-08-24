@@ -6,14 +6,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
-@Document(collection = "post")
-public class Post {
+@Document(collection = "user")
+public class User {
     @Id
     private String id;
 
-    private String title;
+    private String username;
 
-    private String content;
+    private String password;
 
     @CreatedDate
     private LocalDateTime createdDate;
@@ -26,27 +26,27 @@ public class Post {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getUsername() {
+        return username;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getContent() {
-        return content;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedTime(LocalDateTime createdTime) {
-        this.createdDate = createdTime;
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
     }
 }
