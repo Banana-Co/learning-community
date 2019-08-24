@@ -15,7 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
 @RestController
-@RequestMapping("/api/user")
+//@RequestMapping("/api/user")
 public class UserController {
     @Autowired
     UserService userService;
