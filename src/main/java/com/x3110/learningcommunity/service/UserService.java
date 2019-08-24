@@ -22,10 +22,10 @@ public interface UserService {
 
     /**
      * 通过用户名查找用户
-     * @param user_name
+     * @param username
      * @return User
      */
-    User getUser(String user_name);
+    User getUserByUsername(String username);
 
     /**
      * 通过id查找用户

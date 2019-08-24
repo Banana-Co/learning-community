@@ -4,6 +4,9 @@ import com.x3110.learningcommunity.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,7 +32,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(String user_name) {
-        return null;
+    public User getUserByUsername(String username) {
+        Query query=new Query(Criteria.where("username").is(username));
+        User user=mongoTemplate.findOne(query,User.class);
+        return user;
+
     }
+
 }
