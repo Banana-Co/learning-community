@@ -1,6 +1,8 @@
 package com.x3110.learningcommunity.service;
 
 import com.x3110.learningcommunity.model.User;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -20,10 +22,10 @@ public interface UserService {
 
     /**
      * 通过用户名查找用户
-     * @param user_name
+     * @param username
      * @return User
      */
-    User getUser(String user_name);
+    User getUserByUsername(String username);
 
     /**
      * 通过id查找用户
