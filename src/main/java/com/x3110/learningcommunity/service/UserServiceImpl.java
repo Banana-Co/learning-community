@@ -10,7 +10,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int addUser(User user) {
-        return 0;
+        mongoTemplate.insert(user);
+        return 1;
     }
 
     @Override
