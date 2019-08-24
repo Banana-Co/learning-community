@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changePswd(User user) {
-
+        mongoTemplate.save(user);//可能存在稳定性的问题，后期考虑修改。
     }
 
     @Override

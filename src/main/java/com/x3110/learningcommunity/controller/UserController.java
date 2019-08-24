@@ -1,5 +1,6 @@
 package com.x3110.learningcommunity.controller;
 
+import com.x3110.learningcommunity.model.ChangePswdVo;
 import com.x3110.learningcommunity.model.User;
 import com.x3110.learningcommunity.result.Result;
 import com.x3110.learningcommunity.result.ResultCode;
@@ -90,6 +91,29 @@ public class UserController {
         // 6-20 位，字母、数字、字符
         String regStr = "^([A-Z]|[a-z]|[0-9]|[`~!@#$%^&*()+=|{}':;',\\\\[\\\\].<>/?~！@#￥%……&*（）――+|{}【】‘；：”“'。，、？]){6,20}$";
         return input.matches(regStr);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "changepswd", method = RequestMethod.POST)
+    public Result changePassword(@RequestBody ChangePswdVo changePswdVo){
+        User user = userService.getUserByUsername(changePswdVo.getUsername());
+        String encryptedPwd = null;
+        try{
+            if(!Md5SaltTool.validPassword(changePswdVo.getOldPswd(),user.getPassword())){
+                return ResultFactory.buildFailResult(ResultCode.FAIL);
+            }
+            if(!rexCheckPassword(changePswdVo.getNewPswd())){
+                return  ResultFactory.buildFailResult(ResultCode.INVALID_PASSWORD);
+            }
+            encryptedPwd = Md5SaltTool.getEncryptedPwd(changePswdVo.getNewPswd());
+            user.setPassword(encryptedPwd);
+            userService.changePswd(user);
+        }catch (NoSuchAlgorithmException e){
+            e.printStackTrace();
+        }catch (UnsupportedEncodingException e){
+            e.printStackTrace();
+        }
+        return ResultFactory.buildSuccessResult("修改密码成功");
     }
 
 }
