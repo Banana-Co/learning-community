@@ -16,4 +16,9 @@ public class PostController {
     public int addPost(@RequestBody Post post) {
         return postService.addPost(post);
     }
+
+    @RequestMapping(value = "removePost",method = RequestMethod.DELETE)
+    public int removePost(@RequestBody String id){return postService.removePost(id);}
+
+    @RequestMapping(value = )
 }
