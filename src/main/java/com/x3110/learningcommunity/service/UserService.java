@@ -1,6 +1,8 @@
 package com.x3110.learningcommunity.service;
 
 import com.x3110.learningcommunity.model.User;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
