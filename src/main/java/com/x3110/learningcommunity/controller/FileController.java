@@ -1,6 +1,7 @@
 package com.x3110.learningcommunity.controller;
 
 import com.x3110.learningcommunity.model.UploadFile;
+import com.x3110.learningcommunity.model.Vo.ChangeAvaterVo;
 import com.x3110.learningcommunity.result.Result;
 import com.x3110.learningcommunity.result.ResultCode;
 import com.x3110.learningcommunity.result.ResultFactory;
@@ -42,7 +43,7 @@ public class FileController {
 
             UploadFile saveFile = null;
             saveFile = fileService.saveFile(uploadFile);
-            String url = "http://localhost:8000/file/image"+saveFile.getId();
+            String url = "http://localhost:8000/file/"+saveFile.getId();
             return ResultFactory.buildSuccessResult(url);
         }catch (IOException e){
             e.printStackTrace();
@@ -67,28 +68,36 @@ public class FileController {
         return data;
     }
 
-    @CrossOrigin
-    @RequestMapping(value = "/{username}/uploadAvater", method = RequestMethod.POST)
-    public Result uploadAvater(@RequestBody MultipartFile file){
-        if(file.isEmpty())
-            return ResultFactory.buildFailResult(ResultCode.NotExist);//未找到上传文件
+    /**
+     * 用户头像上传接口
+     * @param file
+     * @return Result
+     */
+//    @CrossOrigin
+//    @RequestMapping(value = "/uploadAvater", method = RequestMethod.POST)
+//    public Result uploadAvater(@RequestBody MultipartFile file){
+//        if(file.isEmpty())
+//            return ResultFactory.buildFailResult(ResultCode.NotExist);//未找到上传文件
+//
+//        String fileName = file.getOriginalFilename();
+//        try{
+//            UploadFile uploadFile = new UploadFile();
+//            uploadFile.setName(fileName);
+//            uploadFile.setCreatedDate(LocalDateTime.now());
+//            uploadFile.setContent(new Binary(file.getBytes()));
+//            uploadFile.setContentType(file.getContentType());
+//            uploadFile.setSize(file.getSize());
+//
+//            UploadFile saveFile = null;
+//            saveFile = fileService.saveFile(uploadFile);
+//            String url = "http://localhost:8000/file/image/"+saveFile.getId();
+//            return ResultFactory.buildSuccessResult(url);
+//        }catch (IOException e){
+//            e.printStackTrace();
+//            return ResultFactory.buildFailResult(ResultCode.FAIL);//上次失败
+//        }
+//    }
 
-        String fileName = file.getOriginalFilename();
-        try{
-            UploadFile uploadFile = new UploadFile();
-            uploadFile.setName(fileName);
-            uploadFile.setCreatedDate(LocalDateTime.now());
-            uploadFile.setContent(new Binary(file.getBytes()));
-            uploadFile.setContentType(file.getContentType());
-            uploadFile.setSize(file.getSize());
 
-            UploadFile saveFile = null;
-            saveFile = fileService.saveFile(uploadFile);
-            String url = "http://localhost:8000/file/"+saveFile.getId();
-        }catch (IOException e){
-            e.printStackTrace();
-            return ResultFactory.buildFailResult(ResultCode.FAIL);//上次失败
-        }
-        return ResultFactory.buildSuccessResult("上传成功");
-    }
+
 }

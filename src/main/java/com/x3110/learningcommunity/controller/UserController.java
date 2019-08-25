@@ -1,5 +1,6 @@
 package com.x3110.learningcommunity.controller;
 
+import com.x3110.learningcommunity.model.Vo.ChangeAvaterVo;
 import com.x3110.learningcommunity.model.Vo.ChangePswdVo;
 import com.x3110.learningcommunity.model.User;
 import com.x3110.learningcommunity.result.Result;
@@ -127,6 +128,15 @@ public class UserController {
         return userService.getUserByUsername(username).getCreatedDate().toString();
     }
 
+    @CrossOrigin
+    @RequestMapping(value = "uploadAvater", method = RequestMethod.POST)
+    public Result uploadAvater(@RequestBody ChangeAvaterVo changeAvaterVo){
+        User user = userService.getUserByUsername(changeAvaterVo.getUsername());
+        if(user == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
+        user.setAvaterUrl(changeAvaterVo.getAvaterUrl());
+        userService.uploadAvater(user);
+        return ResultFactory.buildSuccessResult("头像上传成功");
+    }
 //    @CrossOrigin
 //    @RequestMapping(value = "time", method = RequestMethod.POST)
 //    public String getTime(@RequestBody String username) {

@@ -23,6 +23,8 @@ public class UserServiceImpl implements UserService {
         return 1;
     }
 
+
+
     @Override
     public void changePswd(User user) {
         mongoTemplate.save(user);//可能存在稳定性的问题，后期考虑是否修改。
@@ -40,5 +42,8 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-
+    @Override
+    public void uploadAvater(User user) {
+        mongoTemplate.save(user);//可能存在稳定性问题，后期考虑是否修改。
+    }
 }

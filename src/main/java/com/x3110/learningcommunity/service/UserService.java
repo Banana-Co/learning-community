@@ -34,4 +34,5 @@ public interface UserService {
      */
     Integer getIdByName(String user_name);
 
+    void uploadAvater(User user);
 }
