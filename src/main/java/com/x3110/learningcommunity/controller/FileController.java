@@ -57,7 +57,7 @@ public class FileController {
      * @return byte[]
      */
     @CrossOrigin
-    @RequestMapping(value = "/file/image/{id}", method = RequestMethod.GET, produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
+    @RequestMapping(value = "/file/{id}", method = RequestMethod.GET, produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
     public byte[] image(@PathVariable String id){
         byte[] data = null;
         UploadFile file = null;
