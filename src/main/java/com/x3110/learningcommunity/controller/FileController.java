@@ -27,7 +27,7 @@ public class FileController {
      */
     @CrossOrigin
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-    public Result uploadFile(@RequestParam(value = "file")MultipartFile file){
+    public Result uploadFile(@RequestBody MultipartFile file){
         if(file.isEmpty())
             return ResultFactory.buildFailResult(ResultCode.NotExist);//未找到上传文件
 
