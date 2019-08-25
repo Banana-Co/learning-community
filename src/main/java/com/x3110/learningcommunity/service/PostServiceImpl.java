@@ -1,21 +1,32 @@
 package com.x3110.learningcommunity.service;
 
 import com.x3110.learningcommunity.model.Post;
+import com.x3110.learningcommunity.model.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Primary
 public class PostServiceImpl implements PostService {
     @Autowired
     MongoTemplate mongoTemplate;
+
+    @Autowired
+    PostRepository postRepository;
 
     @Override
     public int addPost(Post post) {
@@ -49,4 +60,19 @@ public class PostServiceImpl implements PostService {
         return post;
     }
 
+    @Override
+    public Page<Post> findPostByPage(Integer page, String sortedby, String order) {
+        Sort sort;
+
+        if (order.equals("asc"))
+            sort = new Sort(Sort.Direction.ASC, sortedby);
+        else if (order.equals("desc"))
+            sort = new Sort(Sort.Direction.DESC, sortedby);
+        else
+            sort = new Sort(Sort.Direction.DESC, sortedby);
+
+        Pageable pageable = PageRequest.of(page, 10, sort);
+
+        return postRepository.findAll(pageable);
+    }
 }

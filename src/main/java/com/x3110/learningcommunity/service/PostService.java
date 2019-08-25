@@ -1,10 +1,14 @@
 package com.x3110.learningcommunity.service;
 
 import com.x3110.learningcommunity.model.Post;
+import org.springframework.data.domain.Page;
+
+import java.util.List;
 
 public interface PostService {
     int addPost(Post post);
     int removePost(Long postId);
     int updatePost(Post post);
     Post findPostById(Long postId);
+    Page<Post> findPostByPage(Integer page, String sortedby, String order);
 }
