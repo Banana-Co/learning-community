@@ -128,8 +128,8 @@ public class UserController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "getUser", method = RequestMethod.GET)
-    public User getUser(@RequestBody String username){
+    @RequestMapping(value = "/getUser/{username}", method = RequestMethod.GET)
+    public User getUser(@PathVariable (value = "username") String username){
         return userService.getUserByUsername(username);
     }
 
