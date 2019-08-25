@@ -1,4 +1,4 @@
-package com.x3110.learningcommunity.model;
+package com.x3110.learningcommunity.model.Vo;
 
 public class ChangePswdVo {
     private String username;

@@ -1,6 +1,6 @@
 package com.x3110.learningcommunity.controller;
 
-import com.x3110.learningcommunity.model.ChangePswdVo;
+import com.x3110.learningcommunity.model.Vo.ChangePswdVo;
 import com.x3110.learningcommunity.model.User;
 import com.x3110.learningcommunity.result.Result;
 import com.x3110.learningcommunity.result.ResultCode;
@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 public class UserController {
     @Autowired
     UserService userService;
+
     @CrossOrigin
     @RequestMapping(value="addUser", method = RequestMethod.POST)
     public int addUser(@RequestBody User user) {
@@ -122,7 +123,10 @@ public class UserController {
      */
     @CrossOrigin
     @RequestMapping(value = "time={username}", method = RequestMethod.GET)
-    public String getTime(@PathVariable (name="username")String username) {
-        return userService.getUserByUsername(username).getRegisterDate().toString();
+    public String getTime(@PathVariable (value = "username")String username) {
+        return userService.getUserByUsername(username).getCreatedDate().toString();
     }
+
+
+
 }

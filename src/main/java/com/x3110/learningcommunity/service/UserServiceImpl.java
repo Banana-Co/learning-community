@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int addUser(User user) {
-        user.setRegisterDate(LocalDateTime.now());
+        user.setCreatedDate(LocalDateTime.now());
         mongoTemplate.insert(user);
         return 1;
     }
@@ -39,5 +39,6 @@ public class UserServiceImpl implements UserService {
         User user=mongoTemplate.findOne(query,User.class);
         return user;
     }
+
 
 }
