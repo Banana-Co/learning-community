@@ -42,12 +42,12 @@ public class FileController {
 
             UploadFile saveFile = null;
             saveFile = fileService.saveFile(uploadFile);
-            String url = "http://localhost:8000/file/"+saveFile.getId();
+            String url = "http://localhost:8000/file/image"+saveFile.getId();
+            return ResultFactory.buildSuccessResult(url);
         }catch (IOException e){
             e.printStackTrace();
             return ResultFactory.buildFailResult(ResultCode.FAIL);//上次失败
         }
-        return ResultFactory.buildSuccessResult("上传成功");
     }
 
     /**
@@ -65,5 +65,30 @@ public class FileController {
             data = file.getContent().getData();
         }
         return data;
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/{username}/uploadAvater", method = RequestMethod.POST)
+    public Result uploadAvater(@RequestBody MultipartFile file){
+        if(file.isEmpty())
+            return ResultFactory.buildFailResult(ResultCode.NotExist);//未找到上传文件
+
+        String fileName = file.getOriginalFilename();
+        try{
+            UploadFile uploadFile = new UploadFile();
+            uploadFile.setName(fileName);
+            uploadFile.setCreatedDate(LocalDateTime.now());
+            uploadFile.setContent(new Binary(file.getBytes()));
+            uploadFile.setContentType(file.getContentType());
+            uploadFile.setSize(file.getSize());
+
+            UploadFile saveFile = null;
+            saveFile = fileService.saveFile(uploadFile);
+            String url = "http://localhost:8000/file/"+saveFile.getId();
+        }catch (IOException e){
+            e.printStackTrace();
+            return ResultFactory.buildFailResult(ResultCode.FAIL);//上次失败
+        }
+        return ResultFactory.buildSuccessResult("上传成功");
     }
 }
