@@ -18,7 +18,7 @@ public class User {
     //@CreatedDate
     private LocalDateTime createdDate;
 
-    private String avaterUrl;
+    private String avatarUrl;
 
     public String getId() {
         return id;
@@ -52,11 +52,11 @@ public class User {
         this.createdDate = createdDate;
     }
 
-    public String getAvaterUrl() {
-        return avaterUrl;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
-    public void setAvaterUrl(String avaterUrl) {
-        this.avaterUrl = avaterUrl;
+    public void setAvatarUrl(String avaterUrl) {
+        this.avatarUrl = avaterUrl;
     }
 }

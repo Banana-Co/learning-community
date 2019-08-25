@@ -1,6 +1,6 @@
 package com.x3110.learningcommunity.controller;
 
-import com.x3110.learningcommunity.model.Vo.ChangeAvaterVo;
+import com.x3110.learningcommunity.model.Vo.ChangeAvatarVo;
 import com.x3110.learningcommunity.model.Vo.ChangePswdVo;
 import com.x3110.learningcommunity.model.User;
 import com.x3110.learningcommunity.result.Result;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDateTime;
 
 @RestController
 //@RequestMapping("/api/user")
@@ -129,11 +128,11 @@ public class UserController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "uploadAvater", method = RequestMethod.POST)
-    public Result uploadAvater(@RequestBody ChangeAvaterVo changeAvaterVo){
+    @RequestMapping(value = "uploadAvatar", method = RequestMethod.POST)
+    public Result uploadAvater(@RequestBody ChangeAvatarVo changeAvaterVo){
         User user = userService.getUserByUsername(changeAvaterVo.getUsername());
         if(user == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
-        user.setAvaterUrl(changeAvaterVo.getAvaterUrl());
+        user.setAvatarUrl(changeAvaterVo.getAvatarUrl());
         userService.uploadAvater(user);
         return ResultFactory.buildSuccessResult("头像上传成功");
     }

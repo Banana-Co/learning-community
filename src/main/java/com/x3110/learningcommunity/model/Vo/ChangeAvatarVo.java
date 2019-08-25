@@ -1,9 +1,9 @@
 package com.x3110.learningcommunity.model.Vo;
 
-public class ChangeAvaterVo {
+public class ChangeAvatarVo {
     private String username;
 
-    private String avaterUrl;
+    private String avatarUrl;
 
 
     public String getUsername() {
@@ -14,11 +14,11 @@ public class ChangeAvaterVo {
         this.username = username;
     }
 
-    public String getAvaterUrl() {
-        return avaterUrl;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
-    public void setAvaterUrl(String avaterUrl) {
-        this.avaterUrl = avaterUrl;
+    public void setAvatarUrl(String avaterUrl) {
+        this.avatarUrl = avaterUrl;
     }
 }
