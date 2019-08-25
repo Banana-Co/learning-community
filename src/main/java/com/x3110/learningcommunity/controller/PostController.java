@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/post")
+@CrossOrigin
 public class PostController {
     @Autowired
     PostService postService;
