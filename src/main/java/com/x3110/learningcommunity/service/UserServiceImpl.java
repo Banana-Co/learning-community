@@ -18,10 +18,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int addUser(User user) {
-        user.setRegisterDate(LocalDateTime.now());
+        user.setCreatedDate(LocalDateTime.now());
         mongoTemplate.insert(user);
         return 1;
     }
+
+
 
     @Override
     public void changePswd(User user) {
@@ -40,4 +42,8 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public void uploadAvater(User user) {
+        mongoTemplate.save(user);//可能存在稳定性问题，后期考虑是否修改。
+    }
 }

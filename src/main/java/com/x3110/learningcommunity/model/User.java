@@ -16,7 +16,9 @@ public class User {
     private String password;
 
     //@CreatedDate
-    private LocalDateTime registerDate;
+    private LocalDateTime createdDate;
+
+    private String avatarUrl;
 
     public String getId() {
         return id;
@@ -42,11 +44,19 @@ public class User {
         this.password = password;
     }
 
-    public LocalDateTime getRegisterDate() {
-        return registerDate;
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
     }
 
-    public void setRegisterDate(LocalDateTime registerDate) {
-        this.registerDate = registerDate;
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avaterUrl) {
+        this.avatarUrl = avaterUrl;
     }
 }

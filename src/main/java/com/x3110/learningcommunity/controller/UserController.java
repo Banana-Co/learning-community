@@ -1,6 +1,7 @@
 package com.x3110.learningcommunity.controller;
 
-import com.x3110.learningcommunity.model.ChangePswdVo;
+import com.x3110.learningcommunity.model.Vo.ChangeAvatarVo;
+import com.x3110.learningcommunity.model.Vo.ChangePswdVo;
 import com.x3110.learningcommunity.model.User;
 import com.x3110.learningcommunity.result.Result;
 import com.x3110.learningcommunity.result.ResultCode;
@@ -13,13 +14,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
-import java.time.LocalDateTime;
 
 @RestController
 //@RequestMapping("/api/user")
 public class UserController {
     @Autowired
     UserService userService;
+
     @CrossOrigin
     @RequestMapping(value="addUser", method = RequestMethod.POST)
     public int addUser(@RequestBody User user) {
@@ -121,8 +122,30 @@ public class UserController {
      * @return String
      */
     @CrossOrigin
-    @RequestMapping(value = "time={username}", method = RequestMethod.GET)
-    public String getTime(@PathVariable (name="username")String username) {
-        return userService.getUserByUsername(username).getRegisterDate().toString();
+    @RequestMapping(value = "time/{username}", method = RequestMethod.GET)
+    public String getTime(@PathVariable (value = "username")String username) {
+        return userService.getUserByUsername(username).getCreatedDate().toString();
     }
+
+    @CrossOrigin
+    @RequestMapping(value = "/getUser/{username}", method = RequestMethod.GET)
+    public User getUser(@PathVariable (value = "username") String username){
+        return userService.getUserByUsername(username);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "uploadAvatar", method = RequestMethod.POST)
+    public Result uploadAvater(@RequestBody ChangeAvatarVo changeAvaterVo){
+        User user = userService.getUserByUsername(changeAvaterVo.getUsername());
+        if(user == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
+        user.setAvatarUrl(changeAvaterVo.getAvatarUrl());
+        userService.uploadAvater(user);
+        return ResultFactory.buildSuccessResult("头像上传成功");
+    }
+//    @CrossOrigin
+//    @RequestMapping(value = "time", method = RequestMethod.POST)
+//    public String getTime(@RequestBody String username) {
+//        return userService.getUserByUsername(username).getCreatedDate().toString();
+//    }
+
 }
