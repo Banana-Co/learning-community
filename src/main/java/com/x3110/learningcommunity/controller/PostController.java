@@ -7,8 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+<<<<<<< HEAD
 @RequestMapping("/api/post")
 @CrossOrigin
+=======
+//@RequestMapping("/api/post")
+>>>>>>> 2eb0f0fb024e6818abfee574a686c0341732473b
 public class PostController {
     @Autowired
     PostService postService;
@@ -17,4 +21,14 @@ public class PostController {
     public int addPost(@RequestBody Post post) {
         return postService.addPost(post);
     }
+
+    @RequestMapping(value = "removePost",method = RequestMethod.POST)
+    public int removePost(@RequestBody Long postId){return postService.removePost(postId);}
+
+    @RequestMapping(value = "updatePost",method = RequestMethod.POST)
+    public int updatePost(@RequestBody Post post){return postService.updatePost(post);}
+
+    @CrossOrigin
+    @RequestMapping(value = "findPostById={postId}",method = RequestMethod.GET)
+    public Post findPostById(@PathVariable (name="postId")Long postId){return postService.findPostById(postId);}
 }

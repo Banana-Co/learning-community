@@ -3,7 +3,6 @@ package com.x3110.learningcommunity.model;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +10,8 @@ import java.time.LocalDateTime;
 public class Post {
     @Id
     private String id;
+
+    private Long postId;
 
     private String title;
 
@@ -21,6 +22,14 @@ public class Post {
 
     public String getId() {
         return id;
+    }
+
+    public Long getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Long postId) {
+        this.postId = postId;
     }
 
     public void setId(String id) {
