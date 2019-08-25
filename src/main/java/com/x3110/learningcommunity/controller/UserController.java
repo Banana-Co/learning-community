@@ -121,16 +121,16 @@ public class UserController {
      *向前端返回注册时间
      * @return String
      */
-//    @CrossOrigin
-//    @RequestMapping(value = "time={username}", method = RequestMethod.GET)
-//    public String getTime(@PathVariable (value = "username")String username) {
-//        return userService.getUserByUsername(username).getCreatedDate().toString();
-//    }
-
     @CrossOrigin
-    @RequestMapping(value = "time", method = RequestMethod.POST)
-    public String getTime(@RequestBody String username) {
+    @RequestMapping(value = "time/{username}", method = RequestMethod.GET)
+    public String getTime(@PathVariable (value = "username")String username) {
         return userService.getUserByUsername(username).getCreatedDate().toString();
     }
+
+//    @CrossOrigin
+//    @RequestMapping(value = "time", method = RequestMethod.POST)
+//    public String getTime(@RequestBody String username) {
+//        return userService.getUserByUsername(username).getCreatedDate().toString();
+//    }
 
 }
