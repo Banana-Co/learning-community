@@ -7,7 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+<<<<<<< HEAD
+@RequestMapping("/api/post")
+@CrossOrigin
+=======
 //@RequestMapping("/api/post")
+>>>>>>> 2eb0f0fb024e6818abfee574a686c0341732473b
 public class PostController {
     @Autowired
     PostService postService;
