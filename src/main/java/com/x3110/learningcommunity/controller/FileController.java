@@ -15,15 +15,21 @@ import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+@RestController
 public class FileController {
     @Autowired
     FileService fileService;
 
+    /**
+     * 通用的文件上传接口
+     * @param file
+     * @return Result
+     */
     @CrossOrigin
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-    public Result uploadFile(@RequestParam(value = "image")MultipartFile file){
+    public Result uploadFile(@RequestParam(value = "file")MultipartFile file){
         if(file.isEmpty())
-            return ResultFactory.buildFailResult(ResultCode.NotExist);//未找到上传图片
+            return ResultFactory.buildFailResult(ResultCode.NotExist);//未找到上传文件
 
         String fileName = file.getOriginalFilename();
         try{
@@ -44,6 +50,11 @@ public class FileController {
         return ResultFactory.buildSuccessResult("上传成功");
     }
 
+    /**
+     * 图片获取接口（jpg,png)
+     * @param id
+     * @return byte[]
+     */
     @CrossOrigin
     @RequestMapping(value = "/file/image/{id}", method = RequestMethod.GET, produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
     public byte[] image(@PathVariable String id){
