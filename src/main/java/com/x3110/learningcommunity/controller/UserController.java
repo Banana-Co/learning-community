@@ -128,6 +128,12 @@ public class UserController {
     }
 
     @CrossOrigin
+    @RequestMapping(value = "getUser", method = RequestMethod.GET)
+    public User getUser(@RequestBody String username){
+        return userService.getUserByUsername(username);
+    }
+
+    @CrossOrigin
     @RequestMapping(value = "uploadAvatar", method = RequestMethod.POST)
     public Result uploadAvater(@RequestBody ChangeAvatarVo changeAvaterVo){
         User user = userService.getUserByUsername(changeAvaterVo.getUsername());
