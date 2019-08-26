@@ -118,13 +118,6 @@ public class Post {
         this.valid = valid;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
 
     public List<Comment> getComment() {
         return comment;
