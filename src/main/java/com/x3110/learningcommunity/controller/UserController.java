@@ -21,11 +21,11 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @CrossOrigin
-    @RequestMapping(value="addUser", method = RequestMethod.POST)
-    public int addUser(@RequestBody User user) {
-        return userService.addUser(user);
-    }
+//    @CrossOrigin
+//    @RequestMapping(value="addUser", method = RequestMethod.POST)
+//    public int addUser(@RequestBody User user) {
+//        return userService.addUser(user);
+//    }
 
     @CrossOrigin
     @RequestMapping(value = "login", method = RequestMethod.POST, produces = "application/json; charset = UTF-8")
