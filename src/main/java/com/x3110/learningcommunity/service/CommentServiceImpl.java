@@ -23,9 +23,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public int addComment(Comment comment) {
-        Post fatherPost=postService.findPostById(comment.getFatherPostId());
-        fatherPost.getCommentArrayList().add(comment);
-        comment.setNo(fatherPost.getCommentArrayList().size());
+       // Post fatherPost=postService.findPostById(comment.getFatherPostId());
+       // fatherPost.getCommentArrayList().add(comment);
+       // comment.setNo(fatherPost.getCommentArrayList().size());
         mongoTemplate.insert(comment);
         return 1;
     }
