@@ -54,8 +54,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post findPostById(Long postId){
-        Query query=new Query(Criteria.where("postId").is(postId));
+    public Post findPostById(String id){
+        Query query=new Query(Criteria.where("id").is(id));
         Post post=mongoTemplate.findOne(query,Post.class);
         return post;
     }
