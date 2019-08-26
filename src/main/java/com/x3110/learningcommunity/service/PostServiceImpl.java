@@ -35,9 +35,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public int removePost(Long postId){
-       Query query=new Query(Criteria.where("postId").is(postId));
-       mongoTemplate.remove(query,Post.class);
+    public int removePost(Post post){
+        Query query=new Query(Criteria.where("postId").is(post.getPostId()));
+        Update update=new Update();
+        update.set("valid",0);
+        update.set("createdDate",new Date());
+        mongoTemplate.updateFirst(query,update,Post.class);
         return 1;
     }
 

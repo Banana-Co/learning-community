@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Document(collection = "post")
 public class Post {
@@ -24,9 +25,13 @@ public class Post {
     private int likeNum;
 
     private String avatarUrl;
+    private int valid=1;
+
+    private ArrayList<Comment> commentArrayList;
 
     @CreatedDate
     private LocalDateTime createdDate;
+
 
     public String getId() {
         return id;
@@ -72,6 +77,7 @@ public class Post {
         this.createdDate = createdTime;
     }
 
+
     public String getAuthor() {
         return author;
     }
@@ -102,5 +108,16 @@ public class Post {
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
+    }
+    public int getValid() {
+        return valid;
+    }
+
+    public void setValid(int valid) {
+        this.valid = valid;
+    }
+
+    public ArrayList<Comment> getCommentArrayList() {
+        return commentArrayList;
     }
 }
