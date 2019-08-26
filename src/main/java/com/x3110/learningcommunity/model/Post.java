@@ -17,11 +17,23 @@ public class Post {
 
     private String content;
 
+    private String author;
+
+    private int replyNum;
+
+    private int likeNum;
+
+    private String avatarUrl;
+
     @CreatedDate
     private LocalDateTime createdDate;
 
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Long getPostId() {
@@ -30,10 +42,6 @@ public class Post {
 
     public void setPostId(Long postId) {
         this.postId = postId;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getTitle() {
@@ -56,7 +64,43 @@ public class Post {
         return createdDate;
     }
 
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
     public void setCreatedTime(LocalDateTime createdTime) {
         this.createdDate = createdTime;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public int getReplyNum() {
+        return replyNum;
+    }
+
+    public void setReplyNum(int replyNum) {
+        this.replyNum = replyNum;
+    }
+
+    public int getLikeNum() {
+        return likeNum;
+    }
+
+    public void setLikeNum(int likeNum) {
+        this.likeNum = likeNum;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 }
