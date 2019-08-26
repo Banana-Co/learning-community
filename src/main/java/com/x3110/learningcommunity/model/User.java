@@ -15,6 +15,8 @@ public class User {
 
     private String password;
 
+    private int permission;
+
     //@CreatedDate
     private LocalDateTime createdDate;
 
@@ -58,5 +60,13 @@ public class User {
 
     public void setAvatarUrl(String avaterUrl) {
         this.avatarUrl = avaterUrl;
+    }
+
+    public int getPermission() {
+        return permission;
+    }
+
+    public void setPermission(int permission) {
+        this.permission = permission;
     }
 }
