@@ -36,7 +36,7 @@ public class PostController {
     }
 
     @RequestMapping(value = "removePost",method = RequestMethod.POST)
-    public int removePost(@RequestBody Long postId){return postService.removePost(postId);}
+    public int removePost(@RequestBody Post post){return postService.removePost(post);}
 
     @RequestMapping(value = "updatePost",method = RequestMethod.POST)
     public int updatePost(@RequestBody Post post){return postService.updatePost(post);}

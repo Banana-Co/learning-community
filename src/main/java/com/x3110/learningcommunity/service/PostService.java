@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface PostService {
     int addPost(Post post);
-    int removePost(Long postId);
+    int removePost(Post post);
     int updatePost(Post post);
     Post findPostById(Long postId);
     Page<Post> findPostByPage(Integer page, String sortedby, String order);
