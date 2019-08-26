@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 @Document(collection = "post")
 public class Post {
@@ -22,7 +23,7 @@ public class Post {
 
     private int valid=1;
 
-    private ArrayList<Comment> commentArrayList;
+    private List<Comment> comment;
 
     @CreatedDate
     private LocalDateTime createdDate;
@@ -79,7 +80,19 @@ public class Post {
         this.valid = valid;
     }
 
-    public ArrayList<Comment> getCommentArrayList() {
-        return commentArrayList;
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public List<Comment> getComment() {
+        return comment;
+    }
+
+    public void setComment(List<Comment> comment) {
+        this.comment = comment;
     }
 }
