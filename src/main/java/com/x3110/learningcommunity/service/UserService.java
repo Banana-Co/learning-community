@@ -1,5 +1,6 @@
 package com.x3110.learningcommunity.service;
 
+import com.mongodb.client.result.DeleteResult;
 import com.x3110.learningcommunity.model.User;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -27,12 +28,7 @@ public interface UserService {
      */
     User getUserByUsername(String username);
 
-    /**
-     * 通过id查找用户
-     * @param user_name
-     * @return Integer
-     */
-    Integer getIdByName(String user_name);
-
     void uploadAvater(User user);
+
+    DeleteResult deleteUser(String username);
 }

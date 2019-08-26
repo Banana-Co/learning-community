@@ -3,6 +3,7 @@ package com.x3110.learningcommunity.service;
 import com.x3110.learningcommunity.model.Comment;
 import com.x3110.learningcommunity.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -11,7 +12,9 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Primary
@@ -26,8 +29,18 @@ public class CommentServiceImpl implements CommentService {
        // Post fatherPost=postService.findPostById(comment.getFatherPostId());
        // fatherPost.getCommentArrayList().add(comment);
        // comment.setNo(fatherPost.getCommentArrayList().size());
-        mongoTemplate.insert(comment);
+        Query query=new Query(Criteria.where("id").is(comment.getFatherId()));
+        Update update = new Update();
+        comment.setCreatedDate(LocalDateTime.now());
+        update.addToSet("comment", comment);
+        mongoTemplate.updateFirst(query, update, Post.class);
         return 1;
+    }
+
+    @Override
+    public List<Comment> findComment(String fatherId) {
+        Post post = mongoTemplate.findById(fatherId, Post.class);
+        return post.getComment();
     }
 
     @Override

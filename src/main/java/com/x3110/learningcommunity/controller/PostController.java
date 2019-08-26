@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/post")
+//@RequestMapping("/api/post")
 @CrossOrigin
 public class PostController {
     @Autowired
@@ -22,6 +22,7 @@ public class PostController {
     @Autowired
     PostRepository postRepository;
 
+    @CrossOrigin
     @RequestMapping(value="addPost", method = RequestMethod.POST)
     public int addPost(@RequestBody Post post) {
         return postService.addPost(post);
@@ -42,8 +43,8 @@ public class PostController {
     public int updatePost(@RequestBody Post post){return postService.updatePost(post);}
 
     @CrossOrigin
-    @RequestMapping(value = "findPostById={postId}",method = RequestMethod.GET)
-    public Post findPostById(@PathVariable (name="postId")Long postId){return postService.findPostById(postId);}
+    @RequestMapping(value = "findPostById={id}",method = RequestMethod.GET)
+    public Post findPostById(@PathVariable (name="id")String id){return postService.findPostById(id);}
 
     @RequestMapping(value = "getPostByPage", method = RequestMethod.GET)
     public Page<Post> getPostByPage(@RequestParam Integer page, @RequestParam String sortedby, @RequestParam String order) {

@@ -1,5 +1,6 @@
 package com.x3110.learningcommunity.controller;
 
+import com.mongodb.client.result.DeleteResult;
 import com.x3110.learningcommunity.model.Vo.ChangeAvatarVo;
 import com.x3110.learningcommunity.model.Vo.ChangePswdVo;
 import com.x3110.learningcommunity.model.User;
@@ -21,11 +22,11 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @CrossOrigin
-    @RequestMapping(value="addUser", method = RequestMethod.POST)
-    public int addUser(@RequestBody User user) {
-        return userService.addUser(user);
-    }
+//    @CrossOrigin
+//    @RequestMapping(value="addUser", method = RequestMethod.POST)
+//    public int addUser(@RequestBody User user) {
+//        return userService.addUser(user);
+//    }
 
     @CrossOrigin
     @RequestMapping(value = "login", method = RequestMethod.POST, produces = "application/json; charset = UTF-8")
@@ -147,5 +148,13 @@ public class UserController {
 //    public String getTime(@RequestBody String username) {
 //        return userService.getUserByUsername(username).getCreatedDate().toString();
 //    }
+
+    @CrossOrigin
+    @RequestMapping(value = "deleteUser/username={username}", method = RequestMethod.POST)
+    public DeleteResult deleteUser(@PathVariable (value = "username") String username){
+        System.out.println(userService.getUserByUsername(username).getId());
+        return userService.deleteUser(username);
+    }
+
 
 }

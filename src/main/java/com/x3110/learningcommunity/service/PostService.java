@@ -9,6 +9,6 @@ public interface PostService {
     int addPost(Post post);
     int removePost(Post post);
     int updatePost(Post post);
-    Post findPostById(Long postId);
+    Post findPostById(String id);
     Page<Post> findPostByPage(Integer page, String sortedby, String order);
 }

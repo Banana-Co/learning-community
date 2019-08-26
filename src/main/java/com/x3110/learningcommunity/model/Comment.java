@@ -16,7 +16,10 @@ public class Comment {
 
     private String author;
 
-    private Long fatherPostId;
+    private String fatherId;
+
+
+    private String avatarUrl;
 
     private int no;
 
@@ -24,6 +27,14 @@ public class Comment {
 
     @CreatedDate
     private LocalDateTime createdDate;
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
 
     public String getId() {
         return id;
@@ -42,8 +53,8 @@ public class Comment {
     }
 
 
-    public Long getFatherPostId() {
-        return fatherPostId;
+    public String getFatherId() {
+        return fatherId;
     }
 
     public LocalDateTime getCreatedDate() {
@@ -68,5 +79,17 @@ public class Comment {
 
     public void setNo(int no) {
         this.no = no;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setFatherId(String fatherId) {
+        this.fatherId = fatherId;
     }
 }

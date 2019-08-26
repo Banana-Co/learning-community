@@ -5,8 +5,9 @@ import com.x3110.learningcommunity.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/comment")
 @CrossOrigin
 public class CommentController {
     @Autowired
@@ -15,6 +16,11 @@ public class CommentController {
     @RequestMapping(value="addComment", method = RequestMethod.POST)
     public int addComment(@RequestBody Comment comment) {
         return commentService.addComment(comment);
+    }
+
+    @RequestMapping(value = "findCommentByFatherId={id}",method = RequestMethod.GET)
+    public List<Comment> findCommentByFatherId(@PathVariable(name = "id") String id) {
+        return commentService.findComment(id);
     }
 
     @RequestMapping(value = "removeComment",method = RequestMethod.POST)
