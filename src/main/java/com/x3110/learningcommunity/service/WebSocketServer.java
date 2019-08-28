@@ -1,12 +1,10 @@
 package com.x3110.learningcommunity.service;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.SessionScope;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 @ServerEndpoint(value = "/websocket")

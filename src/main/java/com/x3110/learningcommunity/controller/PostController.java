@@ -9,6 +9,7 @@ import com.x3110.learningcommunity.model.PostRepository;
 import com.x3110.learningcommunity.service.CommentService;
 import com.x3110.learningcommunity.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -24,11 +25,9 @@ public class PostController {
     PostService postService;
     @Autowired
     CommentService commentService;
-
     @Autowired
     PostRepository postRepository;
 
-    @CrossOrigin
     @RequestMapping(value="addPost", method = RequestMethod.POST)
     public UpdateResult addPost(@RequestBody Post post) {
         postService.addPost(post);
@@ -48,7 +47,6 @@ public class PostController {
         return 1;
     }
 
-    @CrossOrigin
     @RequestMapping(value = "removePost/id={id}", method = RequestMethod.POST)
     public DeleteResult removePost(@PathVariable (value = "id") String id){
         return postService.removePost(id);
@@ -57,9 +55,8 @@ public class PostController {
     @RequestMapping(value = "updatePost",method = RequestMethod.POST)
     public int updatePost(@RequestBody Post post){return postService.updatePost(post);}
 
-    @CrossOrigin
     @RequestMapping(value = "findPostById={id}",method = RequestMethod.GET)
-    public Post findPostById(@PathVariable (name="id")String id){return postService.findPostById(id);}
+    public Post findPostById(@PathVariable (value = "id")String id){return postService.findPostById(id);}
 
     @RequestMapping(value = "getPostByPage", method = RequestMethod.GET)
     public Page<Post> getPostByPage(@RequestParam Integer page, @RequestParam String sortedby, @RequestParam String order) {
@@ -71,13 +68,11 @@ public class PostController {
         return postRepository.findAll();
     }
 
-    @CrossOrigin
     @RequestMapping(value ="findPostByKeyword={keyword}",method = RequestMethod.GET)
     public List<Post> findPostByKeyword(@PathVariable (value = "keyword")String keyword){
-        return postService.findPostByKeyword(keyword);
+        return postRepository.findByTitleLike(keyword);
     }
 
-    @CrossOrigin
     @RequestMapping(value = "MyPost={author}",method = RequestMethod.GET)
     public List<Post> MyPost(@PathVariable(value = "author")String author){
         return postService.MyPost(author);

@@ -94,15 +94,6 @@ public class PostServiceImpl implements PostService {
         return postRepository.findAll(pageable);
     }
 
-    @Override
-    public List<Post> findPostByKeyword(String keyword) {
-        Pattern pattern = Pattern.compile(".*?" + escapeExprSpecialWord(keyword) + ".*");
-        Query query=Query.query(Criteria.where("title").regex(pattern));
-        List<Post> posts=mongoTemplate.find(query,Post.class);
-        return posts;
-    }
-
-
     String escapeExprSpecialWord(String keyword) {
         if (!StringUtils.isEmpty(keyword)) {
             String[] fbsArr = {"\\", "$", "(", ")", "*", "+", ".", "[", "]", "?", "^", "{", "}", "|"};
