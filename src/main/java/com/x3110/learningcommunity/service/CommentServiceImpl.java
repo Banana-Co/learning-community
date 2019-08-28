@@ -51,26 +51,15 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public DeleteResult removeComment(String id){
-        return mongoTemplate.remove(new Query(Criteria.where("_id").is(id)),"comment");
-    }
-
-    @Override
-    public int updateComment(Comment comment){
-        Query query=new Query(Criteria.where("id").is(comment.getId()));
-        Update update=new Update();
-        update.set("content",comment.getContent());
-        update.set("createdDate",new Date());
-        mongoTemplate.updateFirst(query,update,Comment.class);
-        return 1;
-    }
-
-    @Override
-    public Result addLike(String id) {
-        Query query=new Query(Criteria.where("id").is(id));
-        Comment comment=mongoTemplate.findOne(query,Comment.class);
-        if(comment == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
-        comment.setLikeNum(comment.getLikeNum()+1);
+    public Result addLike(Comment comment) {
+        String fatherId = comment.getFatherId();
+        Query query=new Query(Criteria.where("id").is(fatherId));
+        Post post=mongoTemplate.findOne(query,Post.class);
+        if(post == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
+        int index = comment.getNo()-1;
+        Comment comment1 = post.getComment().get(index);
+        if(comment1 ==  null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
+        comment1.setLikeNum(comment1.getLikeNum()+1);
         return ResultFactory.buildSuccessResult("点赞成功");
     }
 }

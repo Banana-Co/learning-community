@@ -2,6 +2,7 @@ package com.x3110.learningcommunity.controller;
 
 import com.mongodb.client.result.DeleteResult;
 import com.x3110.learningcommunity.model.Comment;
+import com.x3110.learningcommunity.result.Result;
 import com.x3110.learningcommunity.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +24,8 @@ public class CommentController {
     public List<Comment> findCommentByFatherId(@PathVariable(name = "id") String id) {
         return commentService.findComment(id);
     }
-
-    @CrossOrigin
-    @RequestMapping(value = "removeComment/id={id}", method = RequestMethod.POST)
-    public DeleteResult removeComment(@PathVariable (value = "id") String id){
-        return commentService.removeComment(id);
+    @RequestMapping(value = "addLike", method = RequestMethod.POST)
+    public Result addLike(@RequestBody Comment comment){
+        return commentService.addLike(comment);
     }
-
-    @RequestMapping(value = "updateComment",method = RequestMethod.POST)
-    public int updateComment(@RequestBody Comment comment){return  commentService.updateComment(comment);}
 }
