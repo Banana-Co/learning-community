@@ -21,17 +21,32 @@ public class Post {
 
     private String author;
 
+
+    private int valid=1;//帖子的有效性，1代表有效，0表示被删除，但依然存在数据库中，只是在页面中不显示了
+
+    private int permission; //权限等级
+
     private int replyNum;
 
     private int likeNum;
 
     private String avatarUrl;
-    private int valid=1;
+
 
     private List<Comment> comment;
 
     @CreatedDate
     private LocalDateTime createdDate;
+
+
+    public int getPermission() {
+        return permission;
+    }
+
+    public void setPermission(int permission) {
+        this.permission = permission;
+    }
+
 
 
     public String getId() {
