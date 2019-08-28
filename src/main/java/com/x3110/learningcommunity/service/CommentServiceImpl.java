@@ -59,9 +59,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Result addLike(Comment comment) {
-        String fatherId = comment.getFatherId();
-        Query query = new Query(Criteria.where("id").is(fatherId));
-        Post post = mongoTemplate.findOne(query, Post.class);
+        Post post = postService.findPostById(comment.getFatherId());
         if (post == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
         int index = comment.getNo() - 1;
         Comment comment1 = post.getComment().get(index);
