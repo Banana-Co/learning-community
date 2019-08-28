@@ -18,12 +18,23 @@ public class Comment {
 
     private String fatherId;
 
+
+    private String avatarUrl;
+
     private int no;
 
     private int valid=1;
 
     @CreatedDate
     private LocalDateTime createdDate;
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
 
     public String getId() {
         return id;

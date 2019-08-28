@@ -1,7 +1,9 @@
 package com.x3110.learningcommunity.service;
 
+import com.mongodb.client.result.DeleteResult;
 import com.x3110.learningcommunity.model.Post;
 import com.x3110.learningcommunity.model.PostRepository;
+import com.x3110.learningcommunity.util.MongoAutoId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
@@ -30,18 +32,15 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public int addPost(Post post) {
-        mongoTemplate.insert(post);
+       //MongoAutoId mongoAutoId=new MongoAutoId();
+       // post.setPostId(mongoAutoId.getNextSequence("post"));
+        mongoTemplate.save(post);
         return 1;
     }
 
     @Override
-    public int removePost(Post post){
-        Query query=new Query(Criteria.where("postId").is(post.getPostId()));
-        Update update=new Update();
-        update.set("valid",0);
-        update.set("createdDate",new Date());
-        mongoTemplate.updateFirst(query,update,Post.class);
-        return 1;
+    public DeleteResult removePost(String id){
+        return mongoTemplate.remove(new Query(Criteria.where("_id").is(id)),"post");
     }
 
     @Override
@@ -50,6 +49,7 @@ public class PostServiceImpl implements PostService {
         Update update=new Update();
         update.set("title",post.getTitle());
         update.set("content",post.getContent());
+        update.set("permission",post.getPermission());
         update.set("createdDate",new Date());
         mongoTemplate.updateFirst(query,update,Post.class);
 
@@ -77,5 +77,10 @@ public class PostServiceImpl implements PostService {
         Pageable pageable = PageRequest.of(page, 10, sort);
 
         return postRepository.findAll(pageable);
+    }
+
+    @Override
+    public Post findPostByKeyword(String keyword) {
+        return null;
     }
 }
