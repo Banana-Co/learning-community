@@ -11,4 +11,5 @@ public interface CommentService {
     int addComment(Comment comment);
     List<Comment> findComment(String fatherId);
     Result addLike(Comment comment);
+
 }

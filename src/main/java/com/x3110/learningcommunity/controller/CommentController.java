@@ -28,4 +28,5 @@ public class CommentController {
     public Result addLike(@RequestBody Comment comment){
         return commentService.addLike(comment);
     }
+
 }

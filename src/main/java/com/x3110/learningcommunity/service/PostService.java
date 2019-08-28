@@ -14,4 +14,5 @@ public interface PostService {
     Page<Post> findPostByPage(Integer page, String sortedby, String order);
 
    List<Post> findPostByKeyword(String keyword);
+   List<Post> MyPost(String author);
 }
