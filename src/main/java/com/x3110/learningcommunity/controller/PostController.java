@@ -2,6 +2,7 @@ package com.x3110.learningcommunity.controller;
 
 import com.mongodb.Mongo;
 import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import com.x3110.learningcommunity.model.Comment;
 import com.x3110.learningcommunity.model.Post;
 import com.x3110.learningcommunity.model.PostRepository;
@@ -29,13 +30,15 @@ public class PostController {
 
     @CrossOrigin
     @RequestMapping(value="addPost", method = RequestMethod.POST)
-    public int addPost(@RequestBody Post post) {
+    public UpdateResult addPost(@RequestBody Post post) {
         Comment comment = new Comment();
         comment.setContent(post.getContent());
         comment.setAuthor(post.getAuthor());
         comment.setFatherId(post.getId());
-        commentService.addComment(comment);
-        return postService.addPost(post);
+        comment.setCreatedDate(post.getCreatedDate());
+        comment.setAvatarUrl(post.getAvatarUrl());
+        postService.addPost(post);
+        return commentService.addComment(comment);
     }
 
     @RequestMapping(value="addPosts", method = RequestMethod.POST)

@@ -33,7 +33,7 @@ public class Post {
 
     private String avatarUrl;
 
-    private List<Comment> comment;
+    private List<Comment> comment = null;
 
     @CreatedDate
     private LocalDateTime createdDate;
