@@ -30,7 +30,7 @@ public class PostController {
         Comment comment = new Comment();
         comment.setContent(post.getContent());
         comment.setAuthor(post.getAuthor());
-        comment.setFatherId(post.get);
+        comment.setFatherId(post.getId());
         return postService.addPost(post);
     }
 
