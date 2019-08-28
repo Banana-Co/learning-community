@@ -59,4 +59,11 @@ public class PostController {
     public List<Post> getAll() {
         return postRepository.findAll();
     }
+
+    @CrossOrigin
+    @RequestMapping(value ="findPostByKeyword={keyword}",method = RequestMethod.GET)
+    public List<Post> findPostByKeyword(@PathVariable (name = "keyword")String keyword){
+        return postService.findPostByKeyword(keyword);
+    }
+
 }

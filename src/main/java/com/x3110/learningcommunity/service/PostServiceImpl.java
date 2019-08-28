@@ -4,6 +4,8 @@ import com.mongodb.client.result.DeleteResult;
 import com.x3110.learningcommunity.model.Post;
 import com.x3110.learningcommunity.model.PostRepository;
 import com.x3110.learningcommunity.util.MongoAutoId;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
@@ -16,10 +18,13 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Service
 @Primary
@@ -80,7 +85,25 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post findPostByKeyword(String keyword) {
-        return null;
+    public List<Post> findPostByKeyword(String keyword) {
+        Pattern pattern = Pattern.compile(".*?" + escapeExprSpecialWord(keyword) + ".*");
+        Query query=Query.query(Criteria.where("title").regex(pattern));
+        List<Post> posts=mongoTemplate.find(query,Post.class);
+        return posts;
+    }
+
+
+    String escapeExprSpecialWord(String keyword) {
+        if (!StringUtils.isEmpty(keyword)) {
+            String[] fbsArr = {"\\", "$", "(", ")", "*", "+", ".", "[", "]", "?", "^", "{", "}", "|"};
+            for (String key : fbsArr) {
+                if (keyword.contains(key)) {
+                    keyword = keyword.replace(key, "\\" + key);
+                }
+            }
+        }
+        System.out.println(keyword);
+        return keyword;
+
     }
 }
