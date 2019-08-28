@@ -3,6 +3,7 @@ package com.x3110.learningcommunity.service;
 import com.mongodb.client.result.DeleteResult;
 import com.x3110.learningcommunity.model.Post;
 import com.x3110.learningcommunity.model.PostRepository;
+import com.x3110.learningcommunity.result.Result;
 import com.x3110.learningcommunity.util.MongoAutoId;
 
 

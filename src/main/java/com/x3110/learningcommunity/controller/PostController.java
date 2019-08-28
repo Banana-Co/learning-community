@@ -2,6 +2,7 @@ package com.x3110.learningcommunity.controller;
 
 import com.mongodb.Mongo;
 import com.mongodb.client.result.DeleteResult;
+import com.x3110.learningcommunity.model.Comment;
 import com.x3110.learningcommunity.model.Post;
 import com.x3110.learningcommunity.model.PostRepository;
 import com.x3110.learningcommunity.service.PostService;
@@ -26,6 +27,10 @@ public class PostController {
     @CrossOrigin
     @RequestMapping(value="addPost", method = RequestMethod.POST)
     public int addPost(@RequestBody Post post) {
+        Comment comment = new Comment();
+        comment.setContent(post.getContent());
+        comment.setAuthor(post.getAuthor());
+        comment.setFatherId(post.get);
         return postService.addPost(post);
     }
 
@@ -62,7 +67,7 @@ public class PostController {
 
     @CrossOrigin
     @RequestMapping(value ="findPostByKeyword={keyword}",method = RequestMethod.GET)
-    public List<Post> findPostByKeyword(@PathVariable (name = "keyword")String keyword){
+    public List<Post> findPostByKeyword(@PathVariable (value = "keyword")String keyword){
         return postService.findPostByKeyword(keyword);
     }
 
