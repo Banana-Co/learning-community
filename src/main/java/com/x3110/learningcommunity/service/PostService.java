@@ -13,5 +13,11 @@ public interface PostService {
     int updatePost(Post post);
     Post findPostById(String id);
     Page<Post> findPostByPage(Integer page, String sortedby, String order);
+
+
+
+   List<Post> MyPost(String author);
+
     List<Post> findPostByKeyword(String keyword);
+
 }
