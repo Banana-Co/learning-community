@@ -14,4 +14,5 @@ public interface CommentService {
     UpdateResult addComment(Comment comment);
     List<Comment> findComment(String fatherId);
     Result addLike(String fatherId, int no, String username);
+    Result haveLiked(String fatherId, int no, String username);
 }

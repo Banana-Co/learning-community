@@ -18,6 +18,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -55,7 +56,6 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Result addLike(String fatherId, int no, String username) {
-
         Post post = postService.findPostById(fatherId);//找到father psot
         if (post == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
 
@@ -63,10 +63,14 @@ public class CommentServiceImpl implements CommentService {
         if (comment == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
         List<String> likedUsers = comment.getLikeUsers();
         if(likedUsers == null){
-            comment.getLikeUsers().add(username);
+            List<String> users = new ArrayList<>();
+            users.add(username);
+            comment.setLikeUsers(users);
             comment.setLikeNum(comment.getLikeNum() + 1);
         }else if(likedUsers.contains(username)){
+            comment.getLikeUsers().remove(username);
             comment.setLikeNum(comment.getLikeNum() - 1);
+            postService.updateComments(post);
             return ResultFactory.buildFailResult(ResultCode.HaveExist);
         }else {
             comment.getLikeUsers().add(username);
@@ -75,5 +79,18 @@ public class CommentServiceImpl implements CommentService {
         postService.updateComments(post);
         return ResultFactory.buildSuccessResult("点赞成功");
     }
-    
+
+    @Override
+    public Result haveLiked(String fatherId, int no, String username) {
+        Post post = postService.findPostById(fatherId);
+        if(post == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
+        Comment comment = post.getComment().get(no);
+
+        List<String> likedUsers = comment.getLikeUsers();
+        if(likedUsers == null)return ResultFactory.buildFailResult(ResultCode.HaveExist);//已点赞
+        else if(likedUsers.contains(username))return ResultFactory.buildFailResult(ResultCode.HaveExist);//已点赞
+        else return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);//未点赞
+    }
+
+
 }
