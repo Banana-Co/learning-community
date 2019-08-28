@@ -1,6 +1,7 @@
 package com.x3110.learningcommunity.service;
 
 import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import com.x3110.learningcommunity.model.Post;
 import com.x3110.learningcommunity.model.PostRepository;
 import com.x3110.learningcommunity.result.Result;
@@ -60,6 +61,14 @@ public class PostServiceImpl implements PostService {
         mongoTemplate.updateFirst(query,update,Post.class);
 
         return 1;
+    }
+
+    @Override
+    public UpdateResult updateComments(Post post){
+        Query query=new Query(Criteria.where("postId").is(post.getPostId()));
+        Update update=new Update();
+        update.set("comment",post.getComment());
+        return mongoTemplate.updateFirst(query,update,Post.class);
     }
 
     @Override

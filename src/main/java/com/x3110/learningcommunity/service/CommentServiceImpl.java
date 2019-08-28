@@ -35,14 +35,14 @@ public class CommentServiceImpl implements CommentService {
         Update update = new Update();
         comment.setCreatedDate(LocalDateTime.now());
         Post post = postService.findPostById(comment.getFatherId());
-        System.out.println(post);
         List<Comment> comments = post.getComment();
         if (comments == null) {
             comment.setNo(0);
         } else
             comment.setNo(post.getComment().size());
         //System.out.println(post.getComment());
-        update.setOnInsert("lastedReplyDate", comment.getCreatedDate());
+        update.set("replyNum",post.getReplyNum()+1);
+        update.set("latestReplyDate", comment.getCreatedDate());
         update.addToSet("comment", comment);
         return mongoTemplate.updateFirst(query, update, Post.class);
     }
@@ -55,12 +55,19 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Result addLike(Comment comment) {
+
         Post post = postService.findPostById(comment.getFatherId());
         if (post == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
-        int index = comment.getNo() - 1;
+
+        int index = comment.getNo();
+        System.out.println(index);
         Comment comment1 = post.getComment().get(index);
         if (comment1 == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
         comment1.setLikeNum(comment1.getLikeNum() + 1);
+        post.getComment().set(index, comment1);
+        postService.updateComments(post);
         return ResultFactory.buildSuccessResult("点赞成功");
+
+
     }
 }
