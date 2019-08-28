@@ -79,7 +79,7 @@ public class PostController {
 
     @CrossOrigin
     @RequestMapping(value = "MyPost={author}",method = RequestMethod.GET)
-    public List<Post> MyPost(@PathVariable(name = "author")String author){
+    public List<Post> MyPost(@PathVariable(value = "author")String author){
         return postService.MyPost(author);
     }
 
