@@ -9,8 +9,6 @@ import java.time.LocalDateTime;
 
 @Document(collection = "comment")
 public class Comment {
-    @Id
-    private String id;
 
     private String content;
 
@@ -20,25 +18,21 @@ public class Comment {
 
     private String avatarUrl;
 
-    private int no;
+    private int no = 0;
 
-    private int valid=1;
+    private int valid = 1;
 
     private int likeNum = 0;
 
     @CreatedDate
     private LocalDateTime createdDate;
+
     public String getAvatarUrl() {
         return avatarUrl;
     }
 
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
-    }
-
-
-    public String getId() {
-        return id;
     }
 
     public String getContent() {
@@ -80,10 +74,6 @@ public class Comment {
 
     public void setNo(int no) {
         this.no = no;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public void setAuthor(String author) {

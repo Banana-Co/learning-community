@@ -2,8 +2,11 @@ package com.x3110.learningcommunity.controller;
 
 import com.mongodb.Mongo;
 import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
+import com.x3110.learningcommunity.model.Comment;
 import com.x3110.learningcommunity.model.Post;
 import com.x3110.learningcommunity.model.PostRepository;
+import com.x3110.learningcommunity.service.CommentService;
 import com.x3110.learningcommunity.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,14 +22,22 @@ import java.util.List;
 public class PostController {
     @Autowired
     PostService postService;
+    @Autowired
+    CommentService commentService;
 
     @Autowired
     PostRepository postRepository;
 
     @CrossOrigin
     @RequestMapping(value="addPost", method = RequestMethod.POST)
-    public int addPost(@RequestBody Post post) {
-        return postService.addPost(post);
+    public UpdateResult addPost(@RequestBody Post post) {
+        postService.addPost(post);
+        Comment comment = new Comment();
+        comment.setContent(post.getContent());
+        comment.setAuthor(post.getAuthor());
+        comment.setFatherId(post.getId());
+        comment.setAvatarUrl(post.getAvatarUrl());
+        return commentService.addComment(comment);
     }
 
     @RequestMapping(value="addPosts", method = RequestMethod.POST)
@@ -62,7 +73,7 @@ public class PostController {
 
     @CrossOrigin
     @RequestMapping(value ="findPostByKeyword={keyword}",method = RequestMethod.GET)
-    public List<Post> findPostByKeyword(@PathVariable (name = "keyword")String keyword){
+    public List<Post> findPostByKeyword(@PathVariable (value = "keyword")String keyword){
         return postService.findPostByKeyword(keyword);
     }
 
