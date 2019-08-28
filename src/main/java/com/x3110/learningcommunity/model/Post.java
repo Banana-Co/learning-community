@@ -33,6 +33,8 @@ public class Post {
     @CreatedDate
     private LocalDateTime createdDate;
 
+    @CreatedDate
+    private LocalDateTime latestReplyDate;
 
     public String getId() {
         return id;
@@ -118,19 +120,19 @@ public class Post {
         this.valid = valid;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
-
     public List<Comment> getComment() {
         return comment;
     }
 
     public void setComment(List<Comment> comment) {
         this.comment = comment;
+    }
+
+    public LocalDateTime getLatestReplyDate() {
+        return latestReplyDate;
+    }
+
+    public void setLatestReplyDate(LocalDateTime latestReplyDate) {
+        this.latestReplyDate = latestReplyDate;
     }
 }
