@@ -26,8 +26,9 @@ public class CommentController {
     public List<Comment> findCommentByFatherId(@PathVariable(name = "id") String id) {
         return commentService.findComment(id);
     }
-    @RequestMapping(value = "addLike", method = RequestMethod.POST)
+    @RequestMapping(value = "addLike", method = RequestMethod.GET)
     public Result addLike(@RequestParam String fatherId, @RequestParam int no, @RequestParam String username){
+        System.out.println("1");
         return commentService.addLike(fatherId, no, username);
     }
 
