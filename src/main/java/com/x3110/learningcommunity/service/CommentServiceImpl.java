@@ -36,7 +36,7 @@ public class CommentServiceImpl implements CommentService {
         Query query=new Query(Criteria.where("id").is(comment.getFatherId()));
         Update update = new Update();
         comment.setCreatedDate(LocalDateTime.now());
-        comment.setNo(postService.findPostById(comment.getFatherId()).getComment().size());
+        comment.setNo(postService.findPostById(comment.getFatherId()).getComment().size()+1);
         update.setOnInsert("lastedReplyDate", comment.getCreatedDate());
         update.addToSet("comment", comment);
         update.inc("replyNum");
