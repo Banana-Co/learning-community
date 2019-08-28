@@ -1,6 +1,7 @@
 package com.x3110.learningcommunity.controller;
 
 import com.mongodb.Mongo;
+import com.mongodb.client.result.DeleteResult;
 import com.x3110.learningcommunity.model.Post;
 import com.x3110.learningcommunity.model.PostRepository;
 import com.x3110.learningcommunity.service.PostService;
@@ -36,8 +37,11 @@ public class PostController {
         return 1;
     }
 
-    @RequestMapping(value = "removePost",method = RequestMethod.POST)
-    public int removePost(@RequestBody Post post){return postService.removePost(post);}
+    @CrossOrigin
+    @RequestMapping(value = "removePost/id={id}", method = RequestMethod.POST)
+    public DeleteResult removePost(@PathVariable (value = "id") String id){
+        return postService.removePost(id);
+    }
 
     @RequestMapping(value = "updatePost",method = RequestMethod.POST)
     public int updatePost(@RequestBody Post post){return postService.updatePost(post);}

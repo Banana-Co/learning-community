@@ -1,5 +1,6 @@
 package com.x3110.learningcommunity.controller;
 
+import com.mongodb.client.result.DeleteResult;
 import com.x3110.learningcommunity.model.Comment;
 import com.x3110.learningcommunity.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,11 @@ public class CommentController {
         return commentService.findComment(id);
     }
 
-    @RequestMapping(value = "removeComment",method = RequestMethod.POST)
-    public int removeComment(@RequestBody Comment comment){return  commentService.removeComment(comment);}
+    @CrossOrigin
+    @RequestMapping(value = "removeComment/id={id}", method = RequestMethod.POST)
+    public DeleteResult removeComment(@PathVariable (value = "id") String id){
+        return commentService.removeComment(id);
+    }
 
     @RequestMapping(value = "updateComment",method = RequestMethod.POST)
     public int updateComment(@RequestBody Comment comment){return  commentService.updateComment(comment);}

@@ -1,5 +1,6 @@
 package com.x3110.learningcommunity.service;
 
+import com.mongodb.client.result.DeleteResult;
 import com.x3110.learningcommunity.model.Comment;
 import com.x3110.learningcommunity.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class CommentServiceImpl implements CommentService {
     public int addComment(Comment comment) {
        // Post fatherPost=postService.findPostById(comment.getFatherPostId());
        // fatherPost.getCommentArrayList().add(comment);
-       // comment.setNo(fatherPost.getCommentArrayList().size());
+        //comment.setNo(fatherPost.getCommentArrayList().size());
         Query query=new Query(Criteria.where("id").is(comment.getFatherId()));
         Update update = new Update();
         comment.setCreatedDate(LocalDateTime.now());
@@ -44,13 +45,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public int removeComment(Comment comment){
-        Query query=new Query(Criteria.where("id").is(comment.getId()));
-        Update update=new Update();
-        update.set("valid",0);
-        update.set("createdDate",new Date());
-        mongoTemplate.updateFirst(query,update,Comment.class);
-        return 1;
+    public DeleteResult removeComment(String id){
+        return mongoTemplate.remove(new Query(Criteria.where("_id").is(id)),"comment");
     }
 
     @Override

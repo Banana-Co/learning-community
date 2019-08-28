@@ -1,5 +1,6 @@
 package com.x3110.learningcommunity.service;
 
+import com.mongodb.client.result.DeleteResult;
 import com.x3110.learningcommunity.model.Post;
 import com.x3110.learningcommunity.model.PostRepository;
 import com.x3110.learningcommunity.util.MongoAutoId;
@@ -38,13 +39,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public int removePost(Post post){
-        Query query=new Query(Criteria.where("postId").is(post.getPostId()));
-        Update update=new Update();
-        update.set("valid",0);
-        update.set("createdDate",new Date());
-        mongoTemplate.updateFirst(query,update,Post.class);
-        return 1;
+    public DeleteResult removePost(String id){
+        return mongoTemplate.remove(new Query(Criteria.where("_id").is(id)),"post");
     }
 
     @Override
