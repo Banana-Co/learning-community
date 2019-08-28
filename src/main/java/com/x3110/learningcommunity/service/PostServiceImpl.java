@@ -78,4 +78,9 @@ public class PostServiceImpl implements PostService {
 
         return postRepository.findAll(pageable);
     }
+
+    @Override
+    public Post findPostByKeyword(String keyword) {
+        return null;
+    }
 }

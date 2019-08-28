@@ -93,7 +93,6 @@ public class Post {
         this.createdDate = createdTime;
     }
 
-
     public String getAuthor() {
         return author;
     }
