@@ -13,6 +13,5 @@ import java.util.List;
 public interface CommentService {
     UpdateResult addComment(Comment comment);
     List<Comment> findComment(String fatherId);
-    Result addLike(Comment comment);
-
+    Result addLike(String fatherId, int no, String username);
 }

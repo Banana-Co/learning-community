@@ -8,6 +8,7 @@ import com.x3110.learningcommunity.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.annotation.Repeatable;
 import java.util.List;
 
 @RestController
@@ -26,8 +27,8 @@ public class CommentController {
         return commentService.findComment(id);
     }
     @RequestMapping(value = "addLike", method = RequestMethod.POST)
-    public Result addLike(@RequestBody Comment comment){
-        return commentService.addLike(comment);
+    public Result addLike(@RequestParam String fatherId, @RequestParam int no, @RequestParam String username){
+        return commentService.addLike(fatherId, no, username);
     }
 
 }

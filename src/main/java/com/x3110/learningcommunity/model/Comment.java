@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Document(collection = "comment")
@@ -19,10 +20,14 @@ public class Comment {
     private String avatarUrl;
 
     private int no = 0;
+
     private int fatherNo = -1;
+
     private int valid = 1;
 
     private int likeNum = 0;
+
+    private List<String> likeUsers;
 
     @CreatedDate
     private LocalDateTime createdDate;
@@ -98,5 +103,13 @@ public class Comment {
 
     public void setFatherNo(int fatherNo) {
         this.fatherNo = fatherNo;
+    }
+
+    public List<String> getLikeUsers() {
+        return likeUsers;
+    }
+
+    public void setLikeUsers(List<String> likeUsers) {
+        this.likeUsers = likeUsers;
     }
 }

@@ -54,23 +54,18 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Result addLike(Comment comment) {
+    public Result addLike(String fatherId, int no, String username) {
 
-        Post post = postService.findPostById(comment.getFatherId());
+        Post post = postService.findPostById(fatherId);//找到father psot
         if (post == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
 
-        int index = comment.getNo();
-        Comment comment1 = post.getComment().get(index);
-        if (comment1 == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
-        comment1.setLikeNum(comment1.getLikeNum() + 1);
+        Comment comment = post.getComment().get(no);//根据楼层找到comment
+        if (comment == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
+        comment.setLikeNum(comment.getLikeNum() + 1);
+        comment.getLikeUsers().add(username);
 
-        List<Comment> comments= post.getComment();
-        for(Comment i : comments) System.out.println(i.getLikeNum());
-
-        System.out.println(postService.updateComments(post));
+        postService.updateComments(post);
         return ResultFactory.buildSuccessResult("点赞成功");
-
-
     }
     
 }
