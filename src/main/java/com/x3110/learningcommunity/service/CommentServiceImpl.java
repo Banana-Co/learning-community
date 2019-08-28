@@ -34,7 +34,13 @@ public class CommentServiceImpl implements CommentService {
         Query query=new Query(Criteria.where("id").is(comment.getFatherId()));
         Update update = new Update();
         comment.setCreatedDate(LocalDateTime.now());
-        comment.setNo(postService.findPostById(comment.getFatherId()).getComment().size());
+        Post post = postService.findPostById(comment.getFatherId());
+        List<Comment> comments = post.getComment();
+        if (comments == null) {
+            comment.setNo(1);
+        } else
+            comment.setNo(post.getComment().size());
+        //System.out.println(post.getComment());
         update.setOnInsert("lastedReplyDate", comment.getCreatedDate());
         update.addToSet("comment", comment);
         return mongoTemplate.updateFirst(query, update, Post.class);
@@ -49,13 +55,13 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Result addLike(Comment comment) {
         String fatherId = comment.getFatherId();
-        Query query=new Query(Criteria.where("id").is(fatherId));
-        Post post=mongoTemplate.findOne(query,Post.class);
-        if(post == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
-        int index = comment.getNo()-1;
+        Query query = new Query(Criteria.where("id").is(fatherId));
+        Post post = mongoTemplate.findOne(query, Post.class);
+        if (post == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
+        int index = comment.getNo() - 1;
         Comment comment1 = post.getComment().get(index);
-        if(comment1 ==  null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
-        comment1.setLikeNum(comment1.getLikeNum()+1);
+        if (comment1 == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
+        comment1.setLikeNum(comment1.getLikeNum() + 1);
         return ResultFactory.buildSuccessResult("点赞成功");
     }
 }

@@ -18,9 +18,9 @@ public class Comment {
 
     private String avatarUrl;
 
-    private int no;
+    private int no = 0;
 
-    private int valid=1;
+    private int valid = 1;
 
     private int likeNum = 0;
 
