@@ -19,7 +19,7 @@ public class Comment {
     private String avatarUrl;
 
     private int no = 0;
-
+    private int fatherNo = -1;
     private int valid = 1;
 
     private int likeNum = 0;
@@ -90,5 +90,13 @@ public class Comment {
 
     public void setLikeNum(int likeNum) {
         this.likeNum = likeNum;
+    }
+
+    public int getFatherNo() {
+        return fatherNo;
+    }
+
+    public void setFatherNo(int fatherNo) {
+        this.fatherNo = fatherNo;
     }
 }
