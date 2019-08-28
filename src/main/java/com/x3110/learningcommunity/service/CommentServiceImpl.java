@@ -3,6 +3,9 @@ package com.x3110.learningcommunity.service;
 import com.mongodb.client.result.DeleteResult;
 import com.x3110.learningcommunity.model.Comment;
 import com.x3110.learningcommunity.model.Post;
+import com.x3110.learningcommunity.result.Result;
+import com.x3110.learningcommunity.result.ResultCode;
+import com.x3110.learningcommunity.result.ResultFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Primary;
@@ -33,7 +36,10 @@ public class CommentServiceImpl implements CommentService {
         Query query=new Query(Criteria.where("id").is(comment.getFatherId()));
         Update update = new Update();
         comment.setCreatedDate(LocalDateTime.now());
+        comment.setNo(postService.findPostById(comment.getFatherId()).getComment().size()+1);
+        update.setOnInsert("lastedReplyDate", comment.getCreatedDate());
         update.addToSet("comment", comment);
+        update.inc("replyNum");
         mongoTemplate.updateFirst(query, update, Post.class);
         return 1;
     }
@@ -45,17 +51,15 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public DeleteResult removeComment(String id){
-        return mongoTemplate.remove(new Query(Criteria.where("_id").is(id)),"comment");
-    }
-
-    @Override
-    public int updateComment(Comment comment){
-        Query query=new Query(Criteria.where("id").is(comment.getId()));
-        Update update=new Update();
-        update.set("content",comment.getContent());
-        update.set("createdDate",new Date());
-        mongoTemplate.updateFirst(query,update,Comment.class);
-        return 1;
+    public Result addLike(Comment comment) {
+        String fatherId = comment.getFatherId();
+        Query query=new Query(Criteria.where("id").is(fatherId));
+        Post post=mongoTemplate.findOne(query,Post.class);
+        if(post == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
+        int index = comment.getNo()-1;
+        Comment comment1 = post.getComment().get(index);
+        if(comment1 ==  null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
+        comment1.setLikeNum(comment1.getLikeNum()+1);
+        return ResultFactory.buildSuccessResult("点赞成功");
     }
 }

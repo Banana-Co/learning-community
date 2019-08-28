@@ -38,6 +38,8 @@ public class Post {
     @CreatedDate
     private LocalDateTime createdDate;
 
+    @CreatedDate
+    private LocalDateTime latestReplyDate;
 
     public int getPermission() {
         return permission;
@@ -139,5 +141,13 @@ public class Post {
 
     public void setComment(List<Comment> comment) {
         this.comment = comment;
+    }
+
+    public LocalDateTime getLatestReplyDate() {
+        return latestReplyDate;
+    }
+
+    public void setLatestReplyDate(LocalDateTime latestReplyDate) {
+        this.latestReplyDate = latestReplyDate;
     }
 }
