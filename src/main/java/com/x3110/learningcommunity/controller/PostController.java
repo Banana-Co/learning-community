@@ -5,6 +5,7 @@ import com.mongodb.client.result.DeleteResult;
 import com.x3110.learningcommunity.model.Comment;
 import com.x3110.learningcommunity.model.Post;
 import com.x3110.learningcommunity.model.PostRepository;
+import com.x3110.learningcommunity.service.CommentService;
 import com.x3110.learningcommunity.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +21,8 @@ import java.util.List;
 public class PostController {
     @Autowired
     PostService postService;
+    @Autowired
+    CommentService commentService;
 
     @Autowired
     PostRepository postRepository;
@@ -31,6 +34,7 @@ public class PostController {
         comment.setContent(post.getContent());
         comment.setAuthor(post.getAuthor());
         comment.setFatherId(post.getId());
+        commentService.addComment(comment);
         return postService.addPost(post);
     }
 
