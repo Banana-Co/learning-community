@@ -2,6 +2,9 @@ package com.x3110.learningcommunity.service;
 
 import com.x3110.learningcommunity.model.Comment;
 import com.x3110.learningcommunity.model.Post;
+import com.x3110.learningcommunity.result.Result;
+import com.x3110.learningcommunity.result.ResultCode;
+import com.x3110.learningcommunity.result.ResultFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Primary;
@@ -32,6 +35,7 @@ public class CommentServiceImpl implements CommentService {
         Query query=new Query(Criteria.where("id").is(comment.getFatherId()));
         Update update = new Update();
         comment.setCreatedDate(LocalDateTime.now());
+        comment.setNo(postService.findPostById(comment.getFatherId()).getComment().size());
         update.addToSet("comment", comment);
         mongoTemplate.updateFirst(query, update, Post.class);
         return 1;
@@ -61,5 +65,14 @@ public class CommentServiceImpl implements CommentService {
         update.set("createdDate",new Date());
         mongoTemplate.updateFirst(query,update,Comment.class);
         return 1;
+    }
+
+    @Override
+    public Result addLike(String id) {
+        Query query=new Query(Criteria.where("id").is(id));
+        Comment comment=mongoTemplate.findOne(query,Comment.class);
+        if(comment == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
+        comment.setLikeNum(comment.getLikeNum()+1);
+        return ResultFactory.buildSuccessResult("点赞成功");
     }
 }

@@ -18,12 +18,13 @@ public class Comment {
 
     private String fatherId;
 
-
     private String avatarUrl;
 
     private int no;
 
     private int valid=1;
+
+    private int likeNum = 0;
 
     @CreatedDate
     private LocalDateTime createdDate;
@@ -91,5 +92,13 @@ public class Comment {
 
     public void setFatherId(String fatherId) {
         this.fatherId = fatherId;
+    }
+
+    public int getLikeNum() {
+        return likeNum;
+    }
+
+    public void setLikeNum(int likeNum) {
+        this.likeNum = likeNum;
     }
 }
