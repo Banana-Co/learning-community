@@ -31,13 +31,12 @@ public class PostController {
     @CrossOrigin
     @RequestMapping(value="addPost", method = RequestMethod.POST)
     public UpdateResult addPost(@RequestBody Post post) {
+        postService.addPost(post);
         Comment comment = new Comment();
         comment.setContent(post.getContent());
         comment.setAuthor(post.getAuthor());
         comment.setFatherId(post.getId());
-        comment.setCreatedDate(post.getCreatedDate());
         comment.setAvatarUrl(post.getAvatarUrl());
-        postService.addPost(post);
         return commentService.addComment(comment);
     }
 

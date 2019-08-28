@@ -35,9 +35,10 @@ public class CommentServiceImpl implements CommentService {
         Update update = new Update();
         comment.setCreatedDate(LocalDateTime.now());
         Post post = postService.findPostById(comment.getFatherId());
+        System.out.println(post);
         List<Comment> comments = post.getComment();
         if (comments == null) {
-            comment.setNo(1);
+            comment.setNo(0);
         } else
             comment.setNo(post.getComment().size());
         //System.out.println(post.getComment());
