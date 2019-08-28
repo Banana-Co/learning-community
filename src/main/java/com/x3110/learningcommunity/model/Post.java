@@ -21,6 +21,7 @@ public class Post {
 
     private String author;
 
+    private int no=0;
 
     private int valid=1;//帖子的有效性，1代表有效，0表示被删除，但依然存在数据库中，只是在页面中不显示了
 
@@ -32,8 +33,7 @@ public class Post {
 
     private String avatarUrl;
 
-
-    private List<Comment> comment;
+    private List<Comment> comment = null;
 
     @CreatedDate
     private LocalDateTime createdDate;
@@ -48,8 +48,6 @@ public class Post {
     public void setPermission(int permission) {
         this.permission = permission;
     }
-
-
 
     public String getId() {
         return id;
@@ -126,6 +124,7 @@ public class Post {
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
     }
+
     public int getValid() {
         return valid;
     }
@@ -133,7 +132,6 @@ public class Post {
     public void setValid(int valid) {
         this.valid = valid;
     }
-
 
     public List<Comment> getComment() {
         return comment;
@@ -149,5 +147,13 @@ public class Post {
 
     public void setLatestReplyDate(LocalDateTime latestReplyDate) {
         this.latestReplyDate = latestReplyDate;
+    }
+
+    public int getNo() {
+        return no;
+    }
+
+    public void setNo(int no) {
+        this.no = no;
     }
 }

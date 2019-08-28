@@ -1,6 +1,7 @@
 package com.x3110.learningcommunity.service;
 
 import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import com.x3110.learningcommunity.model.Comment;
 import com.x3110.learningcommunity.model.Post;
 import com.x3110.learningcommunity.result.Result;
@@ -29,19 +30,21 @@ public class CommentServiceImpl implements CommentService {
     PostService postService;
 
     @Override
-    public int addComment(Comment comment) {
-       // Post fatherPost=postService.findPostById(comment.getFatherPostId());
-       // fatherPost.getCommentArrayList().add(comment);
-        //comment.setNo(fatherPost.getCommentArrayList().size());
+    public UpdateResult addComment(Comment comment) {
         Query query=new Query(Criteria.where("id").is(comment.getFatherId()));
         Update update = new Update();
         comment.setCreatedDate(LocalDateTime.now());
-        comment.setNo(postService.findPostById(comment.getFatherId()).getComment().size());
-        update.setOnInsert("latestReplyDate", comment.getCreatedDate());
+        Post post = postService.findPostById(comment.getFatherId());
+        System.out.println(post);
+        List<Comment> comments = post.getComment();
+        if (comments == null) {
+            comment.setNo(0);
+        } else
+            comment.setNo(post.getComment().size());
+        //System.out.println(post.getComment());
+        update.setOnInsert("lastedReplyDate", comment.getCreatedDate());
         update.addToSet("comment", comment);
-        update.inc("replyNum");
-        mongoTemplate.updateFirst(query, update, Post.class);
-        return 1;
+        return mongoTemplate.updateFirst(query, update, Post.class);
     }
 
     @Override
@@ -51,26 +54,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public DeleteResult removeComment(String id){
-        return mongoTemplate.remove(new Query(Criteria.where("_id").is(id)),"comment");
-    }
-
-    @Override
-    public int updateComment(Comment comment){
-        Query query=new Query(Criteria.where("id").is(comment.getId()));
-        Update update=new Update();
-        update.set("content",comment.getContent());
-        update.set("createdDate",new Date());
-        mongoTemplate.updateFirst(query,update,Comment.class);
-        return 1;
-    }
-
-    @Override
-    public Result addLike(String id) {
-        Query query=new Query(Criteria.where("id").is(id));
-        Comment comment=mongoTemplate.findOne(query,Comment.class);
-        if(comment == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
-        comment.setLikeNum(comment.getLikeNum()+1);
+    public Result addLike(Comment comment) {
+        Post post = postService.findPostById(comment.getFatherId());
+        if (post == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
+        int index = comment.getNo() - 1;
+        Comment comment1 = post.getComment().get(index);
+        if (comment1 == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
+        comment1.setLikeNum(comment1.getLikeNum() + 1);
         return ResultFactory.buildSuccessResult("点赞成功");
     }
 }
