@@ -28,6 +28,7 @@ public class CommentController {
     }
     @RequestMapping(value = "addLike", method = RequestMethod.GET)
     public Result addLike(@RequestParam String fatherId, @RequestParam int no, @RequestParam String username){
+        System.out.println("1");
         return commentService.addLike(fatherId, no, username);
     }
 
