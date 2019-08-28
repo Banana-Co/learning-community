@@ -1,6 +1,7 @@
 package com.x3110.learningcommunity.service;
 
 import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import com.x3110.learningcommunity.model.Comment;
 import com.x3110.learningcommunity.model.Post;
 import com.x3110.learningcommunity.result.Result;
@@ -29,11 +30,8 @@ public class CommentServiceImpl implements CommentService {
     PostService postService;
 
     @Override
-    public int addComment(Comment comment) {
-        // Post fatherPost=postService.findPostById(comment.getFatherPostId());
-        // fatherPost.getCommentArrayList().add(comment);
-        //comment.setNo(fatherPost.getCommentArrayList().size());
-        Query query = new Query(Criteria.where("id").is(comment.getFatherId()));
+    public UpdateResult addComment(Comment comment) {
+        Query query=new Query(Criteria.where("id").is(comment.getFatherId()));
         Update update = new Update();
         comment.setCreatedDate(LocalDateTime.now());
         Post post = postService.findPostById(comment.getFatherId());
@@ -41,14 +39,11 @@ public class CommentServiceImpl implements CommentService {
         if (comments == null) {
             comment.setNo(1);
         } else
-            comment.setNo(post.getComment().size() + 1);
+            comment.setNo(post.getComment().size());
         //System.out.println(post.getComment());
-
         update.setOnInsert("lastedReplyDate", comment.getCreatedDate());
         update.addToSet("comment", comment);
-        update.inc("replyNum");
-        mongoTemplate.updateFirst(query, update, Post.class);
-        return 1;
+        return mongoTemplate.updateFirst(query, update, Post.class);
     }
 
     @Override

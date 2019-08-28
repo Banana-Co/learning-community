@@ -1,6 +1,7 @@
 package com.x3110.learningcommunity.controller;
 
 import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import com.x3110.learningcommunity.model.Comment;
 import com.x3110.learningcommunity.result.Result;
 import com.x3110.learningcommunity.service.CommentService;
@@ -16,7 +17,7 @@ public class CommentController {
     CommentService commentService;
 
     @RequestMapping(value="addComment", method = RequestMethod.POST)
-    public int addComment(@RequestBody Comment comment) {
+    public UpdateResult addComment(@RequestBody Comment comment) {
         return commentService.addComment(comment);
     }
 

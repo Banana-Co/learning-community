@@ -33,7 +33,6 @@ public class Post {
 
     private String avatarUrl;
 
-
     private List<Comment> comment;
 
     @CreatedDate
@@ -49,8 +48,6 @@ public class Post {
     public void setPermission(int permission) {
         this.permission = permission;
     }
-
-
 
     public String getId() {
         return id;
@@ -127,6 +124,7 @@ public class Post {
     public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
     }
+
     public int getValid() {
         return valid;
     }
@@ -134,7 +132,6 @@ public class Post {
     public void setValid(int valid) {
         this.valid = valid;
     }
-
 
     public List<Comment> getComment() {
         return comment;
