@@ -105,6 +105,12 @@ public class PostServiceImpl implements PostService {
         }
         System.out.println(keyword);
         return keyword;
+    }
 
+    @Override
+    public List<Post> MyPost(String author){
+        Query query=Query.query(Criteria.where("author").is(author));
+        List<Post> posts=mongoTemplate.find(query,Post.class);
+        return posts;
     }
 }

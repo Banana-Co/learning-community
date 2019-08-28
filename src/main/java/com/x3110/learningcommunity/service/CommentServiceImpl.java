@@ -63,4 +63,5 @@ public class CommentServiceImpl implements CommentService {
         comment1.setLikeNum(comment1.getLikeNum() + 1);
         return ResultFactory.buildSuccessResult("点赞成功");
     }
+    
 }

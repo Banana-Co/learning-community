@@ -77,4 +77,10 @@ public class PostController {
         return postService.findPostByKeyword(keyword);
     }
 
+    @CrossOrigin
+    @RequestMapping(value = "MyPost={author}",method = RequestMethod.GET)
+    public List<Post> MyPost(@PathVariable(name = "author")String author){
+        return postService.MyPost(author);
+    }
+
 }
