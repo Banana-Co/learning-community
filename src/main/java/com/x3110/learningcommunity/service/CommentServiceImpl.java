@@ -60,12 +60,14 @@ public class CommentServiceImpl implements CommentService {
         if (post == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
 
         int index = comment.getNo();
-        System.out.println(index);
         Comment comment1 = post.getComment().get(index);
         if (comment1 == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
         comment1.setLikeNum(comment1.getLikeNum() + 1);
-        post.getComment().set(index, comment1);
-        postService.updateComments(post);
+
+        List<Comment> comments= post.getComment();
+        for(Comment i : comments) System.out.println(i.getLikeNum());
+
+        System.out.println(postService.updateComments(post));
         return ResultFactory.buildSuccessResult("点赞成功");
 
 

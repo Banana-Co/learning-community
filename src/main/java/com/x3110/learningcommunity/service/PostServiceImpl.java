@@ -65,7 +65,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public UpdateResult updateComments(Post post){
-        Query query=new Query(Criteria.where("postId").is(post.getPostId()));
+        Query query=new Query(Criteria.where("id").is(post.getId()));
         Update update=new Update();
         update.set("comment",post.getComment());
         return mongoTemplate.updateFirst(query,update,Post.class);
