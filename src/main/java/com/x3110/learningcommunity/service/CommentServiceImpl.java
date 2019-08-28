@@ -37,7 +37,7 @@ public class CommentServiceImpl implements CommentService {
         Update update = new Update();
         comment.setCreatedDate(LocalDateTime.now());
         comment.setNo(postService.findPostById(comment.getFatherId()).getComment().size());
-        update.setOnInsert("lastedReplyDate", comment.getCreatedDate());
+        update.setOnInsert("latestReplyDate", comment.getCreatedDate());
         update.addToSet("comment", comment);
         update.inc("replyNum");
         mongoTemplate.updateFirst(query, update, Post.class);

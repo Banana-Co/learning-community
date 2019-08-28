@@ -2,7 +2,9 @@ package com.x3110.learningcommunity.service;
 
 import com.mongodb.client.result.DeleteResult;
 import com.x3110.learningcommunity.model.Comment;
+import com.x3110.learningcommunity.model.Post;
 import com.x3110.learningcommunity.result.Result;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 

@@ -2,8 +2,10 @@ package com.x3110.learningcommunity.controller;
 
 import com.mongodb.client.result.DeleteResult;
 import com.x3110.learningcommunity.model.Comment;
+import com.x3110.learningcommunity.model.Post;
 import com.x3110.learningcommunity.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,6 +24,11 @@ public class CommentController {
     @RequestMapping(value = "findCommentByFatherId={id}",method = RequestMethod.GET)
     public List<Comment> findCommentByFatherId(@PathVariable(name = "id") String id) {
         return commentService.findComment(id);
+    }
+
+    @RequestMapping(value = "getPostByPage", method = RequestMethod.GET)
+    public Page<Post> getCommentByPage(@RequestParam String fatherId, @RequestParam Integer page, @RequestParam String sortedby, @RequestParam String order) {
+        return commentService.getCommentByPage(fatherId, page - 1, sortedby, order);
     }
 
     @CrossOrigin
