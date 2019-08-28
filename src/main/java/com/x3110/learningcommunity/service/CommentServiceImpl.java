@@ -61,9 +61,17 @@ public class CommentServiceImpl implements CommentService {
 
         Comment comment = post.getComment().get(no);//根据楼层找到comment
         if (comment == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
-        comment.setLikeNum(comment.getLikeNum() + 1);
-        comment.getLikeUsers().add(username);
-
+        List<String> likedUsers = comment.getLikeUsers();
+        if(likedUsers == null){
+            comment.getLikeUsers().add(username);
+            comment.setLikeNum(comment.getLikeNum() + 1);
+        }else if(likedUsers.contains(username)){
+            comment.setLikeNum(comment.getLikeNum() - 1);
+            return ResultFactory.buildFailResult(ResultCode.HaveExist);
+        }else {
+            comment.getLikeUsers().add(username);
+            comment.setLikeNum(comment.getLikeNum() + 1);
+        }
         postService.updateComments(post);
         return ResultFactory.buildSuccessResult("点赞成功");
     }
