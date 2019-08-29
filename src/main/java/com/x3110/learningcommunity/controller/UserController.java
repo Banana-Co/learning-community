@@ -151,7 +151,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "readNotifi", method = RequestMethod.GET)
-    public void readNotification(@RequestParam String username, @RequestParam int notiNo){
-        userService.readNotification(username, notiNo);
+    public Result readNotification(@RequestParam String username, @RequestParam int notiNo){
+        return userService.readNotification(username, notiNo);
     }
 }

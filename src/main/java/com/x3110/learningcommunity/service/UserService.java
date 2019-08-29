@@ -2,6 +2,7 @@ package com.x3110.learningcommunity.service;
 
 import com.mongodb.client.result.DeleteResult;
 import com.x3110.learningcommunity.model.User;
+import com.x3110.learningcommunity.result.Result;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +35,5 @@ public interface UserService {
 
     void notify(String username1, String username2, String message, int type);
 
-    void readNotification(String username, int notiNo);
+    Result readNotification(String username, int notiNo);
 }
