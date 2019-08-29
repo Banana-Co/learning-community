@@ -1,5 +1,6 @@
 package com.x3110.learningcommunity.service;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import com.x3110.learningcommunity.model.Comment;
@@ -29,6 +30,8 @@ public class CommentServiceImpl implements CommentService {
     MongoTemplate mongoTemplate;
     @Autowired
     PostService postService;
+    @Autowired
+    UserService userService;
 
     @Override
     public UpdateResult addComment(Comment comment) {
@@ -41,7 +44,11 @@ public class CommentServiceImpl implements CommentService {
             comment.setNo(0);
         } else
             comment.setNo(post.getComment().size());
-        //System.out.println(post.getComment());
+        //notify
+        Comment comment1 = findCommentByNo(comment.getFatherId(),comment.getFatherNo());//被评论的评论
+        String message = "评论了你的帖子\"" + comment1.getContent()+"\"";
+        userService.notify(comment.getAuthor(), comment1.getAuthor(),message,2);
+
         update.set("replyNum",post.getReplyNum()+1);
         update.set("latestReplyDate", comment.getCreatedDate());
         update.addToSet("comment", comment);
@@ -55,12 +62,22 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public Comment findCommentByNo(String fatherId, int no){
+        return findComment(fatherId).get(no);
+    }
+
+    @Override
     public Result addLike(String fatherId, int no, String username) {
         Post post = postService.findPostById(fatherId);//找到father psot
         if (post == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
 
         Comment comment = post.getComment().get(no);//根据楼层找到comment
         if (comment == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
+        //notify
+        String username2 = comment.getAuthor();//接收通知的用户
+        String message = "点赞了你的帖子\"" + comment.getContent()+"\"";
+        userService.notify(username, username2, message, 1);
+
         List<String> likedUsers = comment.getLikeUsers();
         if(likedUsers == null){
             List<String> users = new ArrayList<>();
