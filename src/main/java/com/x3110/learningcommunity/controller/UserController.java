@@ -18,6 +18,7 @@ import java.security.NoSuchAlgorithmException;
 
 @RestController
 //@RequestMapping("/api/user")
+@CrossOrigin
 public class UserController {
     @Autowired
     UserService userService;
@@ -28,7 +29,6 @@ public class UserController {
 //        return userService.addUser(user);
 //    }
 
-    @CrossOrigin
     @RequestMapping(value = "login", method = RequestMethod.POST, produces = "application/json; charset = UTF-8")
     public Result login(@RequestBody User loginUser, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
@@ -51,7 +51,7 @@ public class UserController {
         return ResultFactory.buildSuccessResult("登录成功");
     }
 
-    @CrossOrigin
+
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public Result registr(@RequestBody User registerUser, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
@@ -96,7 +96,6 @@ public class UserController {
         return input.matches(regStr);
     }
 
-    @CrossOrigin
     @RequestMapping(value = "changepswd", method = RequestMethod.POST)
     public Result changePassword(@RequestBody ChangePswdVo changePswdVo){
         User user = userService.getUserByUsername(changePswdVo.getUsername());
@@ -122,19 +121,16 @@ public class UserController {
      *向前端返回注册时间
      * @return String
      */
-    @CrossOrigin
     @RequestMapping(value = "time/{username}", method = RequestMethod.GET)
     public String getTime(@PathVariable (value = "username")String username) {
         return userService.getUserByUsername(username).getCreatedDate().toString();
     }
 
-    @CrossOrigin
     @RequestMapping(value = "/getUser/{username}", method = RequestMethod.GET)
     public User getUser(@PathVariable (value = "username") String username){
         return userService.getUserByUsername(username);
     }
 
-    @CrossOrigin
     @RequestMapping(value = "uploadAvatar", method = RequestMethod.POST)
     public Result uploadAvater(@RequestBody ChangeAvatarVo changeAvaterVo){
         User user = userService.getUserByUsername(changeAvaterVo.getUsername());
@@ -143,18 +139,15 @@ public class UserController {
         userService.uploadAvater(user);
         return ResultFactory.buildSuccessResult("头像上传成功");
     }
-//    @CrossOrigin
 //    @RequestMapping(value = "time", method = RequestMethod.POST)
 //    public String getTime(@RequestBody String username) {
 //        return userService.getUserByUsername(username).getCreatedDate().toString();
 //    }
 
-    @CrossOrigin
     @RequestMapping(value = "deleteUser/username={username}", method = RequestMethod.POST)
     public DeleteResult deleteUser(@PathVariable (value = "username") String username){
         System.out.println(userService.getUserByUsername(username).getId());
         return userService.deleteUser(username);
     }
-
 
 }

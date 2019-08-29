@@ -83,11 +83,10 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Result haveLiked(String fatherId, int no, String username) {
         Post post = postService.findPostById(fatherId);
-        if(post == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
         Comment comment = post.getComment().get(no);
 
         List<String> likedUsers = comment.getLikeUsers();
-        if(likedUsers == null)return ResultFactory.buildFailResult(ResultCode.HaveExist);//已点赞
+        if(likedUsers == null)return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);//未点赞
         else if(likedUsers.contains(username))return ResultFactory.buildFailResult(ResultCode.HaveExist);//已点赞
         else return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);//未点赞
     }
