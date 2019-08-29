@@ -39,9 +39,9 @@ public class MailServiceImpl implements MailService {
                 char ch = str.charAt(new Random().nextInt(str.length()));
                 uuid += ch;
             }
-            String message = "<div><font face=\"黑体\"><font size=\"4\" style=\"\">您的注册验证码是：</font><b style=\"\"><u style=\"\"><font size=\"5\">" +
-                    uuid+"</font></u></b><font size=\"4\" style=\"\">（区分大小写），欢迎使用学习生活交流论坛。</font></font></div>" +
-                    "<div><font face=\"黑体\"><font size=\"4\" style=\"\">这个验证码将在您收到这封邮件5分钟后失效</font><font size=\"4\" style=\"\">。</font></font></div>";
+            String message = "<div><font face=\"宋体\"><span style=\"font-size: large;\">您的注册验证码是：&nbsp;<br></span><b><font size=\"6\"><u>" +
+                    uuid+"</u></font></b><font size=\"4\">（区分大小写）</font></font><div style=\"font-size: large;\"><font face=\"宋体\">欢迎使用学习生活交流论坛。" +
+                    "</font></div><div style=\"font-size: large;\"><font face=\"宋体\">这个验证码将在您收到这封邮件5分钟后失效。</font>&nbsp;</div></div>";
             helper.setText(message, true);
             mailSender.send(msg);
         }catch (MessagingException e){
