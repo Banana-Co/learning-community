@@ -17,6 +17,8 @@ public class MailServiceImpl implements MailService {
     @Autowired
     private JavaMailSender mailSender;
 
+    public static final String SINGLE_EMAIL_REGEX = "(?:(?:[A-Za-z0-9\\-_@!#$%&'*+/=? ^`{|}~]|(?:\\\\[\\x00-\\xFF]?)|(?:\"[\\x00-\\xFF]*\"))+(?:\\.(?:(?:[A-Za-z0-9\\-_@!#$%&'*+/=?^`{|}~])|(?:\\\\[\\x00-\\xFF]?)|(?:\"[\\x00-\\xFF]*\"))+)*)@(?:(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\\.)+(?:(?:[A-Za-z0-9]*[A-Za-z][A-Za-z0-9]*)(?:[A-Za-z0-9-]*[A-Za-z0-9])?))";
+
     @Override
     public Result sendPin(String toEmail) {
         if(!validEmailAddress(toEmail))return ResultFactory.buildFailResult(ResultCode.INVALID_EMAIL_ADDRESS);
@@ -36,6 +38,6 @@ public class MailServiceImpl implements MailService {
     }
 
     Boolean validEmailAddress(String emailAddress){
-        return emailAddress.matches("^\\w+@(\\w+\\.)+\\w+$");
+        return emailAddress.matches(SINGLE_EMAIL_REGEX);
     }
 }
