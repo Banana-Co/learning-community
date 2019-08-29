@@ -58,10 +58,10 @@ public class UserController {
         return ResultFactory.buildSuccessResult("登录成功");
     }
 
-    @RequestMapping(value = "sendPin", method = RequestMethod.GET)
-    public Result sendPin(@RequestParam String emailAddress){
+    @RequestMapping(value = "sendPin", method = RequestMethod.POST)
+    public Result sendPin(@RequestBody String emailAddress){
         List<User> users = userRepository.getByEmailAddress(emailAddress);
-        if(users != null)return ResultFactory.buildFailResult(ResultCode.EMAILOCCUPIED);
+        if(!users.isEmpty())return ResultFactory.buildFailResult(ResultCode.EMAILOCCUPIED);
         return mailService.sendPin(emailAddress);
     }
 
