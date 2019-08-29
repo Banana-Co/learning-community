@@ -3,7 +3,6 @@ package com.x3110.learningcommunity.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,6 +20,8 @@ public class User {
     private List<Notification> notifications;//通知列表
 
     private int unreadNotification = 0;//未读消息数
+
+    private String emailAddress;
 
     //@CreatedDate
     private LocalDateTime createdDate;
@@ -89,5 +90,13 @@ public class User {
 
     public void setUnreadNotification(int unreadNotification) {
         this.unreadNotification = unreadNotification;
+    }
+
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
     }
 }

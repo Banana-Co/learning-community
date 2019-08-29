@@ -12,6 +12,8 @@ public class Notification {
 
     LocalDateTime notifiDate;
 
+    int notifiNo;
+
     public String getUsername() {
         return username;
     }
@@ -50,5 +52,13 @@ public class Notification {
 
     public void setNotifiDate(LocalDateTime notifiDate) {
         this.notifiDate = notifiDate;
+    }
+
+    public int getNotifiNo() {
+        return notifiNo;
+    }
+
+    public void setNotifiNo(int notifiNo) {
+        this.notifiNo = notifiNo;
     }
 }

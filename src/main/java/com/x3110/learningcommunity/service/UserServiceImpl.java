@@ -13,12 +13,10 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 @Service
 @Primary
@@ -71,7 +69,9 @@ public class UserServiceImpl implements UserService {
                 List<Notification> notificationList = new ArrayList<>();
                 notificationList.add(notification);
                 user.setNotifications(notificationList);
+                notification.setNotifiNo(0);
             }else{
+                notification.setNotifiNo(notifications.size());
                 notifications.add(notification);
             }
             updateNotification(user);//更新数据库中的通知列表

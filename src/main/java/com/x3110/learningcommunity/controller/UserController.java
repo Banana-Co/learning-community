@@ -7,6 +7,7 @@ import com.x3110.learningcommunity.model.User;
 import com.x3110.learningcommunity.result.Result;
 import com.x3110.learningcommunity.result.ResultCode;
 import com.x3110.learningcommunity.result.ResultFactory;
+import com.x3110.learningcommunity.service.MailService;
 import com.x3110.learningcommunity.service.UserService;
 import com.x3110.learningcommunity.util.Md5SaltTool;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ import java.security.NoSuchAlgorithmException;
 public class UserController {
     @Autowired
     UserService userService;
+    @Autowired
+    MailService mailService;
 
 //    @CrossOrigin
 //    @RequestMapping(value="addUser", method = RequestMethod.POST)
@@ -51,6 +54,11 @@ public class UserController {
         return ResultFactory.buildSuccessResult("登录成功");
     }
 
+    @RequestMapping(value = "sendPin", method = RequestMethod.GET)
+    public String sendPin(@RequestParam String emailAddress){
+        return mailService.sendPin(emailAddress);
+    }
+
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public Result registr(@RequestBody User registerUser, BindingResult bindingResult){
@@ -75,6 +83,7 @@ public class UserController {
             encryptedPwd = Md5SaltTool.getEncryptedPwd(registerUser.getPassword());
             user1.setUsername(registerUser.getUsername());
             user1.setPassword(encryptedPwd);
+            user1.setEmailAddress(registerUser.getEmailAddress());
         }catch (NoSuchAlgorithmException e){
             e.printStackTrace();
         }catch (UnsupportedEncodingException e){
