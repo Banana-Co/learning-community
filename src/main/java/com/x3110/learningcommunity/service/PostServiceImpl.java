@@ -4,13 +4,10 @@ import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import com.x3110.learningcommunity.model.Post;
 import com.x3110.learningcommunity.model.PostRepository;
-import com.x3110.learningcommunity.result.Result;
-import com.x3110.learningcommunity.util.MongoAutoId;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,10 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Pattern;
 
 @Service
 @Primary
@@ -112,5 +107,16 @@ public class PostServiceImpl implements PostService {
         Query query=Query.query(Criteria.where("author").is(author));
         List<Post> posts=mongoTemplate.find(query,Post.class);
         return posts;
+    }
+
+    @Override
+    public Page<Post> findPostByAuthorAndPage(String author, Integer page, String sortedby, String order) {
+        Pageable pageable;
+        if (order.equals("asc"))
+            pageable = PageRequest.of(page, 10, new Sort(Sort.Direction.ASC, sortedby));
+        else
+            pageable = PageRequest.of(page, 10, new Sort(Sort.Direction.DESC, sortedby));
+
+        return postRepository.findByAuthor(author, pageable);
     }
 }

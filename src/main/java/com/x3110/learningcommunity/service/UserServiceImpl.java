@@ -47,4 +47,9 @@ public class UserServiceImpl implements UserService {
     public DeleteResult deleteUser(String username) {
         return mongoTemplate.remove(new Query(Criteria.where("username").is(username)),"user");
     }
+
+    @Override
+    public void notify(String username) {
+
+    }
 }
