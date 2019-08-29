@@ -3,6 +3,9 @@ package com.x3110.learningcommunity.service;
 import com.mongodb.client.result.DeleteResult;
 import com.x3110.learningcommunity.model.Notification;
 import com.x3110.learningcommunity.model.User;
+import com.x3110.learningcommunity.result.Result;
+import com.x3110.learningcommunity.result.ResultCode;
+import com.x3110.learningcommunity.result.ResultFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 @Service
 @Primary
@@ -56,6 +60,7 @@ public class UserServiceImpl implements UserService {
         if(username1.equals(username2));
         else{
             Notification notification = new Notification();
+            notification.setNotifiDate(LocalDateTime.now());
             notification.setMessage(message);
             notification.setUsername(username1);
             notification.setType(type);
@@ -82,10 +87,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void readNotification(String username, int notiNo) {
+    public Result readNotification(String username, int notiNo) {
         User user = getUserByUsername(username);
-        user.getNotifications().remove(notiNo);
+        Notification notification = user.getNotifications().get(notiNo);
+        if(notification == null)return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
+        if(notification.getRead() == 1)return ResultFactory.buildFailResult(ResultCode.HaveExist);//已读，操作失败
+        notification.setRead(1);
         user.setUnreadNotification(user.getUnreadNotification()-1);
         updateNotification(user);
+        return ResultFactory.buildSuccessResult("信息已读");
     }
 }
