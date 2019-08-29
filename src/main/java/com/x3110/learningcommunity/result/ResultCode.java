@@ -11,6 +11,15 @@ public enum ResultCode {
      */
     HaveExist(201),
     /**
+     * 已点赞
+     */
+    HavaLiked(202),
+
+    /**
+     * 未点赞
+     */
+    HaventLiked(203),
+    /**
      * 未存在
      */
     NotExist(300),
