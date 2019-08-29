@@ -27,7 +27,7 @@ public class UserController {
     UserService userService;
     @Autowired
     MailService mailService;
-    Autowired
+    @Autowired
     UserRepository userRepository;
 
 //    @CrossOrigin
