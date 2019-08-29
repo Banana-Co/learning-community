@@ -31,4 +31,8 @@ public interface UserService {
     void uploadAvater(User user);
 
     DeleteResult deleteUser(String username);
+
+    void notify(String username1, String username2, String message, int type);
+
+    void readNotification(String username, int notiNo);
 }

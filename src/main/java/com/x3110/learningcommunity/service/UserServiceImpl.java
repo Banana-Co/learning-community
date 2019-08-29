@@ -1,15 +1,20 @@
 package com.x3110.learningcommunity.service;
 
 import com.mongodb.client.result.DeleteResult;
+import com.x3110.learningcommunity.model.Notification;
 import com.x3110.learningcommunity.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Primary
@@ -23,8 +28,6 @@ public class UserServiceImpl implements UserService {
         mongoTemplate.insert(user);
         return 1;
     }
-
-
 
     @Override
     public void changePswd(User user) {
@@ -46,5 +49,43 @@ public class UserServiceImpl implements UserService {
     @Override
     public DeleteResult deleteUser(String username) {
         return mongoTemplate.remove(new Query(Criteria.where("username").is(username)),"user");
+    }
+
+    @Override
+    public void notify(String username1, String username2, String message, int type) {//user1 操作的用户，user2 接受通知的用户
+        if(username1.equals(username2));
+        else{
+            Notification notification = new Notification();
+            notification.setMessage(message);
+            notification.setUsername(username1);
+            notification.setType(type);
+            User user = getUserByUsername(username2);//接受通知的用户
+            user.setUnreadNotification(user.getUnreadNotification()+1);//未读通知加1
+            List<Notification> notifications = user.getNotifications();
+            if(notifications == null){
+                List<Notification> notificationList = new ArrayList<>();
+                notificationList.add(notification);
+                user.setNotifications(notificationList);
+            }else{
+                notifications.add(notification);
+            }
+            updateNotification(user);//更新数据库中的通知列表
+        }
+    }
+
+    public void updateNotification(User user){
+        Query query = new Query(Criteria.where("username").is(user.getUsername()));
+        Update update = new Update();
+        update.set("notifications", user.getNotifications());
+        update.set("unreadNotification", user.getUnreadNotification());
+        mongoTemplate.updateFirst(query, update, User.class);
+    }
+
+    @Override
+    public void readNotification(String username, int notiNo) {
+        User user = getUserByUsername(username);
+        user.getNotifications().remove(notiNo);
+        user.setUnreadNotification(user.getUnreadNotification()-1);
+        updateNotification(user);
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Document(collection = "user")
 public class User {
@@ -16,6 +17,10 @@ public class User {
     private String password;
 
     private int permission;
+
+    private List<Notification> notifications;//通知列表
+
+    private int unreadNotification = 0;//未读消息数
 
     //@CreatedDate
     private LocalDateTime createdDate;
@@ -68,5 +73,21 @@ public class User {
 
     public void setPermission(int permission) {
         this.permission = permission;
+    }
+
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
+    public int getUnreadNotification() {
+        return unreadNotification;
+    }
+
+    public void setUnreadNotification(int unreadNotification) {
+        this.unreadNotification = unreadNotification;
     }
 }

@@ -15,4 +15,5 @@ public interface PostService {
     Page<Post> findPostByPage(Integer page, String sortedby, String order);
     List<Post> MyPost(String author);
     UpdateResult updateComments(Post post);
+    Page<Post> findPostByAuthorAndPage(String author, Integer page, String sortedby, String order);
 }
