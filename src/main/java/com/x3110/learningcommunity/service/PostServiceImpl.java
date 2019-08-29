@@ -105,4 +105,15 @@ public class PostServiceImpl implements PostService {
         List<Post> posts=mongoTemplate.find(query,Post.class);
         return posts;
     }
+
+    @Override
+    public Page<Post> findPostByAuthorAndPage(String author, Integer page, String sortedby, String order) {
+        Pageable pageable;
+        if (order.equals("asc"))
+            pageable = PageRequest.of(page, 10, new Sort(Sort.Direction.ASC, sortedby));
+        else
+            pageable = PageRequest.of(page, 10, new Sort(Sort.Direction.DESC, sortedby));
+
+        return postRepository.findByAuthor(author, pageable);
+    }
 }

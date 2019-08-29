@@ -78,4 +78,8 @@ public class PostController {
         return postService.MyPost(author);
     }
 
+    @RequestMapping(value = "findPostByAuthorAndPage",method = RequestMethod.GET)
+    public Page<Post> findPostByAuthorAndPage(@RequestParam String author, @RequestParam Integer page, @RequestParam String sortedby, @RequestParam String order){
+        return postService.findPostByAuthorAndPage(author, page - 1, sortedby, order);
+    }
 }
