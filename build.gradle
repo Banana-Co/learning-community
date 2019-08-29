@@ -18,5 +18,4 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
-	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 }
