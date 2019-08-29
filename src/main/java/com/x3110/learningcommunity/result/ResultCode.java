@@ -23,7 +23,14 @@ public enum ResultCode {
      * 未存在
      */
     NotExist(300),
-
+    /**
+     * 不合法的邮箱
+     */
+    INVALID_EMAIL_ADDRESS(305),
+    /**
+     * 邮箱已注册
+     */
+    EMAILOCCUPIED(306),
     /**
      * 失败
      */

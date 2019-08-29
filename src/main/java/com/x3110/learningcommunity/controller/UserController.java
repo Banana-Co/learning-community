@@ -1,6 +1,7 @@
 package com.x3110.learningcommunity.controller;
 
 import com.mongodb.client.result.DeleteResult;
+import com.x3110.learningcommunity.model.UserRepository;
 import com.x3110.learningcommunity.model.Vo.ChangeAvatarVo;
 import com.x3110.learningcommunity.model.Vo.ChangePswdVo;
 import com.x3110.learningcommunity.model.User;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 @RestController
 //@RequestMapping("/api/user")
@@ -25,6 +27,8 @@ public class UserController {
     UserService userService;
     @Autowired
     MailService mailService;
+    Autowired
+    UserRepository userRepository;
 
 //    @CrossOrigin
 //    @RequestMapping(value="addUser", method = RequestMethod.POST)
@@ -55,7 +59,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "sendPin", method = RequestMethod.GET)
-    public String sendPin(@RequestParam String emailAddress){
+    public Result sendPin(@RequestParam String emailAddress){
+        List<User> users = userRepository.getByEmailAddress(emailAddress);
+        if(users != null)return ResultFactory.buildFailResult(ResultCode.EMAILOCCUPIED);
         return mailService.sendPin(emailAddress);
     }
 

@@ -1,5 +1,8 @@
 package com.x3110.learningcommunity.service;
 
+import com.x3110.learningcommunity.result.Result;
+import com.x3110.learningcommunity.result.ResultCode;
+import com.x3110.learningcommunity.result.ResultFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.mail.SimpleMailMessage;
@@ -15,7 +18,8 @@ public class MailServiceImpl implements MailService {
     private JavaMailSender mailSender;
 
     @Override
-    public String sendPin(String toEmail) {
+    public Result sendPin(String toEmail) {
+        if(!validEmailAddress(toEmail))return ResultFactory.buildFailResult(ResultCode.INVALID_EMAIL_ADDRESS);
         SimpleMailMessage message=new SimpleMailMessage();
         message.setFrom("learningCom110@163.com");
         message.setTo(toEmail);
@@ -28,6 +32,10 @@ public class MailServiceImpl implements MailService {
         }
         message.setText("您的注册验证码是："+uuid+"（区分大小写），"+"欢迎使用学习生活交流论坛");
         mailSender.send(message);
-        return uuid;
+        return ResultFactory.buildSuccessResult(uuid);
+    }
+
+    Boolean validEmailAddress(String emailAddress){
+        return emailAddress.matches("^\\w+@(\\w+\\.)+\\w+$");
     }
 }
