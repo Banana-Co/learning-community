@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -52,7 +53,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void notify(String username1, String username2, String message, int type) {//user1 操作的用户，user2 接受通知的用户
-        if(username1.equals(username2))return;
+        if(username1.equals(username2));
         else{
             Notification notification = new Notification();
             notification.setMessage(message);
@@ -76,6 +77,15 @@ public class UserServiceImpl implements UserService {
         Query query = new Query(Criteria.where("username").is(user.getUsername()));
         Update update = new Update();
         update.set("notifications", user.getNotifications());
+        update.set("unreadNotification", user.getUnreadNotification());
         mongoTemplate.updateFirst(query, update, User.class);
+    }
+
+    @Override
+    public void readNotification(String username, int notiNo) {
+        User user = getUserByUsername(username);
+        user.getNotifications().remove(notiNo);
+        user.setUnreadNotification(user.getUnreadNotification()-1);
+        updateNotification(user);
     }
 }

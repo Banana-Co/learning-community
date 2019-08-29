@@ -42,12 +42,14 @@ public class CommentServiceImpl implements CommentService {
         List<Comment> comments = post.getComment();
         if (comments == null) {
             comment.setNo(0);
-        } else
+        } else{
             comment.setNo(post.getComment().size());
-        //notify
-        Comment comment1 = findCommentByNo(comment.getFatherId(),comment.getFatherNo());//被评论的评论
-        String message = "评论了你的帖子\"" + comment1.getContent()+"\"";
-        userService.notify(comment.getAuthor(), comment1.getAuthor(),message,2);
+            //notify
+            Comment comment1 = findCommentByNo(comment.getFatherId(),comment.getFatherNo());//被评论的评论
+            String message = "评论了你的帖子\"" + comment1.getContent()+"\"";
+            userService.notify(comment.getAuthor(), comment1.getAuthor(),message,2);
+        }
+
 
         update.set("replyNum",post.getReplyNum()+1);
         update.set("latestReplyDate", comment.getCreatedDate());
@@ -73,13 +75,14 @@ public class CommentServiceImpl implements CommentService {
 
         Comment comment = post.getComment().get(no);//根据楼层找到comment
         if (comment == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
-        //notify
         String username2 = comment.getAuthor();//接收通知的用户
         String message = "点赞了你的帖子\"" + comment.getContent()+"\"";
-        userService.notify(username, username2, message, 1);
 
         List<String> likedUsers = comment.getLikeUsers();
         if(likedUsers == null){
+            //notify
+            userService.notify(username, username2, message, 1);
+
             List<String> users = new ArrayList<>();
             users.add(username);
             comment.setLikeUsers(users);
@@ -90,6 +93,9 @@ public class CommentServiceImpl implements CommentService {
             postService.updateComments(post);
             return ResultFactory.buildFailResult(ResultCode.HaveExist);
         }else {
+            //notify
+            userService.notify(username, username2, message, 1);
+
             comment.getLikeUsers().add(username);
             comment.setLikeNum(comment.getLikeNum() + 1);
         }

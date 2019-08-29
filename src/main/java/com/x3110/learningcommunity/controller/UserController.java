@@ -150,4 +150,8 @@ public class UserController {
         return userService.deleteUser(username);
     }
 
+    @RequestMapping(value = "readNotifi", method = RequestMethod.GET)
+    public void readNotification(@RequestParam String username, @RequestParam int notiNo){
+        userService.readNotification(username, notiNo);
+    }
 }
