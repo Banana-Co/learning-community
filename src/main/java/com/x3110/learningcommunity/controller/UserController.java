@@ -152,6 +152,7 @@ public class UserController {
         User user = userService.getUserByUsername(changeAvaterVo.getUsername());
         if(user == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
         user.setAvatarUrl(changeAvaterVo.getAvatarUrl());
+        System.out.println(changeAvaterVo.getAvatarUrl());
         userService.uploadAvater(user);
         return ResultFactory.buildSuccessResult("头像上传成功");
     }
