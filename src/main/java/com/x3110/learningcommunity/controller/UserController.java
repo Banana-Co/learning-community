@@ -181,4 +181,9 @@ public class UserController {
         User user = userRepository.findByUsername(username);
         return user.getUnreadNotification();
     }
+
+    @RequestMapping(value = "readAllNotification", method = RequestMethod.GET)
+    public Result readAllNotification(@RequestParam String username){
+        return userService.readAllNotification(username);
+    }
 }

@@ -36,4 +36,6 @@ public interface UserService {
     void notify(String username1, String username2, String message, int type, String fatherId);
 
     Result readNotification(String username, int notiNo);
+
+    Result readAllNotification(String username);
 }

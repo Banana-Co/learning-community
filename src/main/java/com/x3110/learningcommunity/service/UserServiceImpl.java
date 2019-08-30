@@ -98,4 +98,17 @@ public class UserServiceImpl implements UserService {
         updateNotification(user);
         return ResultFactory.buildSuccessResult("信息已读");
     }
+
+    @Override
+    public Result readAllNotification(String username){
+        User user = getUserByUsername(username);
+        List<Notification> notifications = user.getNotifications();
+        if(notifications == null)ResultFactory.buildFailResult(ResultCode.NOT_FOUND);//为找到任何消息
+        for(Notification n : notifications){
+            if(n.getRead() == 0) n.setRead(1);//标为已读
+            user.setUnreadNotification(user.getUnreadNotification()-1);
+        }
+        if(user.getUnreadNotification() == 0) return ResultFactory.buildSuccessResult("全部标为已读！");
+        else return ResultFactory.buildFailResult("操作失败！");
+    }
 }
