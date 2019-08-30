@@ -108,7 +108,10 @@ public class UserServiceImpl implements UserService {
             if(n.getRead() == 0) n.setRead(1);//标为已读
             user.setUnreadNotification(user.getUnreadNotification()-1);
         }
-        if(user.getUnreadNotification() == 0) return ResultFactory.buildSuccessResult("全部标为已读！");
+        if(user.getUnreadNotification() == 0){
+            updateNotification(user);
+            return ResultFactory.buildSuccessResult("全部标为已读！");
+        }
         else return ResultFactory.buildFailResult("操作失败！");
     }
 }
