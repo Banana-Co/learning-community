@@ -15,13 +15,15 @@ public class User {
 
     private String password;
 
-    private int permission;
+    private int permission = 1;//0为被禁言，1为普通用户，2为管理员
 
     private List<Notification> notifications;//通知列表
 
     private int unreadNotification = 0;//未读消息数
 
     private String emailAddress;
+
+    private int prestige;//todo
 
     //@CreatedDate
     private LocalDateTime createdDate;
@@ -98,5 +100,13 @@ public class User {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public int getPrestige() {
+        return prestige;
+    }
+
+    public void setPrestige(int prestige) {
+        this.prestige = prestige;
     }
 }

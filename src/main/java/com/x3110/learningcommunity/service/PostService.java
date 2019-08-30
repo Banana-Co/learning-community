@@ -16,4 +16,5 @@ public interface PostService {
     List<Post> MyPost(String author);
     UpdateResult updateComments(Post post);
     Page<Post> findPostByAuthorAndPage(String author, Integer page, String sortedby, String order);
+    Page<Post> findThreadPostByPage(Integer page, String sortedby, String order, int threadId);
 }

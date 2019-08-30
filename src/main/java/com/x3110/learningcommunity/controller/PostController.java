@@ -1,6 +1,5 @@
 package com.x3110.learningcommunity.controller;
 
-import com.mongodb.Mongo;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import com.x3110.learningcommunity.model.Comment;
@@ -9,10 +8,7 @@ import com.x3110.learningcommunity.model.PostRepository;
 import com.x3110.learningcommunity.service.CommentService;
 import com.x3110.learningcommunity.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -61,6 +57,11 @@ public class PostController {
     @RequestMapping(value = "getPostByPage", method = RequestMethod.GET)
     public Page<Post> getPostByPage(@RequestParam Integer page, @RequestParam String sortedby, @RequestParam String order) {
         return postService.findPostByPage(page - 1, sortedby, order);
+    }
+
+    @RequestMapping(value = "getThreadPostByPage", method = RequestMethod.GET)
+    public Page<Post> getThreadPostByPage(@RequestParam Integer page, @RequestParam String sortedby, @RequestParam String order, @RequestParam int threadId) {
+        return postService.findThreadPostByPage(page-1, sortedby, order, threadId);
     }
 
     @RequestMapping(value = "getAll", method = RequestMethod.GET)

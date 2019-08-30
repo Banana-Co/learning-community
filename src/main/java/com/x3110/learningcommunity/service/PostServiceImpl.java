@@ -86,6 +86,22 @@ public class PostServiceImpl implements PostService {
         return postRepository.findAll(pageable);
     }
 
+    @Override
+    public Page<Post> findThreadPostByPage(Integer page, String sortedby, String order, int threadId){
+        Sort sort;
+
+        if (order.equals("asc"))
+            sort = new Sort(Sort.Direction.ASC, sortedby);
+        else if (order.equals("desc"))
+            sort = new Sort(Sort.Direction.DESC, sortedby);
+        else
+            sort = new Sort(Sort.Direction.DESC, sortedby);
+
+        Pageable pageable = PageRequest.of(page, 10, sort);
+
+        return postRepository.findByThreadId(threadId, pageable);
+    }
+
     String escapeExprSpecialWord(String keyword) {
         if (!StringUtils.isEmpty(keyword)) {
             String[] fbsArr = {"\\", "$", "(", ")", "*", "+", ".", "[", "]", "?", "^", "{", "}", "|"};

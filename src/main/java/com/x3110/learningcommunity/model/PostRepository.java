@@ -12,4 +12,5 @@ import java.util.List;
 public interface PostRepository extends MongoRepository<Post, String> {
     List<Post> findByTitleLike(String title);
     Page<Post> findByAuthor(String author, Pageable pageable);
+    Page<Post> findByThreadId(int threadId, Pageable pageable);
 }
