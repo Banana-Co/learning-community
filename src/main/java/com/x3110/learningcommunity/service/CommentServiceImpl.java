@@ -47,7 +47,7 @@ public class CommentServiceImpl implements CommentService {
             //notify
             Comment comment1 = findCommentByNo(comment.getFatherId(),comment.getFatherNo());//被评论的评论
             String message = "评论了你的帖子\"" + comment1.getContent()+"\"";
-            userService.notify(comment.getAuthor(), comment1.getAuthor(),message,2);
+            userService.notify(comment.getAuthor(), comment1.getAuthor(),message,2, comment.getFatherId());
         }
 
 
@@ -81,7 +81,7 @@ public class CommentServiceImpl implements CommentService {
         List<String> likedUsers = comment.getLikeUsers();
         if(likedUsers == null){
             //notify
-            userService.notify(username, username2, message, 1);
+            userService.notify(username, username2, message, 1, fatherId);
 
             List<String> users = new ArrayList<>();
             users.add(username);
@@ -94,7 +94,7 @@ public class CommentServiceImpl implements CommentService {
             return ResultFactory.buildFailResult(ResultCode.HaveExist);
         }else {
             //notify
-            userService.notify(username, username2, message, 1);
+            userService.notify(username, username2, message, 1, fatherId);
 
             comment.getLikeUsers().add(username);
             comment.setLikeNum(comment.getLikeNum() + 1);

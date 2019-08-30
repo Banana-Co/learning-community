@@ -14,6 +14,8 @@ public class Notification {
 
     private int notifiNo;
 
+    private String fatherId;//通知指向的父帖子
+
     public String getUsername() {
         return username;
     }
@@ -60,5 +62,13 @@ public class Notification {
 
     public void setNotifiNo(int notifiNo) {
         this.notifiNo = notifiNo;
+    }
+
+    public String getFatherId() {
+        return fatherId;
+    }
+
+    public void setFatherId(String fatherId) {
+        this.fatherId = fatherId;
     }
 }

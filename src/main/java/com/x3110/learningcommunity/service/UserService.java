@@ -33,7 +33,7 @@ public interface UserService {
 
     DeleteResult deleteUser(String username);
 
-    void notify(String username1, String username2, String message, int type);
+    void notify(String username1, String username2, String message, int type, String fatherId);
 
     Result readNotification(String username, int notiNo);
 }
