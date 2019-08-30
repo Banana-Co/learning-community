@@ -27,7 +27,7 @@ public class FileController {
     @CrossOrigin
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     public Result uploadFile(@RequestBody MultipartFile file){
-        if(file.isEmpty())
+        if(file == null)
             return ResultFactory.buildFailResult(ResultCode.NotExist);//未找到上传文件
 
         String fileName = file.getOriginalFilename();
@@ -45,7 +45,7 @@ public class FileController {
             return ResultFactory.buildSuccessResult(url);
         }catch (IOException e){
             e.printStackTrace();
-            return ResultFactory.buildFailResult(ResultCode.FAIL);//上次失败
+            return ResultFactory.buildFailResult(e.getMessage());//上次失败
         }
     }
 
