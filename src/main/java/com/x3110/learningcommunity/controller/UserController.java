@@ -148,7 +148,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "uploadAvatar", method = RequestMethod.POST)
-    public Result uploadAvater(@RequestBody ChangeAvatarVo changeAvaterVo){
+    public Result uploadAvatar(@RequestBody ChangeAvatarVo changeAvaterVo){
         User user = userService.getUserByUsername(changeAvaterVo.getUsername());
         if(user == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
         user.setAvatarUrl(changeAvaterVo.getAvatarUrl());
