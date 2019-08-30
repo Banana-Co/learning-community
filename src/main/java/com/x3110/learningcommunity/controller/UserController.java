@@ -170,4 +170,15 @@ public class UserController {
     public Result readNotification(@RequestParam String username, @RequestParam int notiNo){
         return userService.readNotification(username, notiNo);
     }
+
+    @RequestMapping(value = "getAvatarUrl", method = RequestMethod.GET)
+    public String getAvatarByUsername(@RequestParam String username){
+        return userRepository.findByUsername(username).getAvatarUrl();
+    }
+
+    @RequestMapping(value = "getUnreadNotifiNum", method = RequestMethod.GET)
+    public int getUnreadNotifiNum(String username){
+        User user = userRepository.findByUsername(username);
+        return user.getUnreadNotification();
+    }
 }
