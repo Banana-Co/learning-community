@@ -45,18 +45,8 @@ public class ReportServiceImpl implements ReportService{
         return mongoTemplate.updateFirst(query, update, Report.class);
 
     }
-
-    @Override
-    public Result valuableReport(String reportId) {
-        Report report = getReportById(reportId);
-        if(report == null)return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
-
-        setDone(report);//标志为已处理
-        return ResultFactory.buildSuccessResult("成功处理举报！");
-    }
-
     @Override
     public DeleteResult deleteReport(String id) {
-        return mongoTemplate.remove(new Query(Criteria.where("id").is(id)),"report");
+        return mongoTemplate.remove(new Query(Criteria.where("_id").is(id)),"report");
     }
 }

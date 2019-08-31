@@ -6,7 +6,6 @@ import com.x3110.learningcommunity.result.Result;
 
 public interface ReportService {
     Result addReport(Report report);
-    Result valuableReport(String reportId);
     Report getReportById(String Id);
     DeleteResult deleteReport(String id);
 }

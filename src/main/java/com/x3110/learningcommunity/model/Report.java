@@ -22,8 +22,6 @@ public class Report {
 
     private LocalDateTime createdDate;
 
-    private int done = 0;
-
     public String getId() {
         return Id;
     }
@@ -78,13 +76,5 @@ public class Report {
 
     public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
-    }
-
-    public int getDone() {
-        return done;
-    }
-
-    public void setDone(int done) {
-        this.done = done;
     }
 }
