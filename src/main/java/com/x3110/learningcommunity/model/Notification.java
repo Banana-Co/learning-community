@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 public class Notification {
     private String username;//进行操作的用户
 
-    private int type;//1:点赞 2：评论
+    private int type;//1:点赞 2：评论 3:禁言 4：删除post 5：删除comment
 
     private String message;
 

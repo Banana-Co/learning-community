@@ -58,16 +58,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void notify(String username1, String username2, String message, int type, String fatherId) {//user1 操作的用户，user2 接受通知的用户
-        if(username1.equals(username2));
+    public void notify(String actionUsername, String notifyUsername, String message, int type, String fatherId) {//user1 操作的用户，user2 接受通知的用户
+        if(actionUsername.equals(notifyUsername));
         else{
             Notification notification = new Notification();
             notification.setNotifiDate(LocalDateTime.now());
             notification.setMessage(message);
-            notification.setUsername(username1);
+            notification.setUsername(actionUsername);
             notification.setFatherId(fatherId);
             notification.setType(type);
-            User user = getUserByUsername(username2);//接受通知的用户
+            User user = getUserByUsername(notifyUsername);//接受通知的用户
             user.setUnreadNotification(user.getUnreadNotification()+1);//未读通知加1
             List<Notification> notifications = user.getNotifications();
             if(notifications == null){

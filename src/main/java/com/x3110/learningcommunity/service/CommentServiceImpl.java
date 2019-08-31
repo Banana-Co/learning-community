@@ -35,6 +35,22 @@ public class CommentServiceImpl implements CommentService {
     UserService userService;
 
     @Override
+    public Result removeComment(String fathreId, int no){
+        Post post = postService.findPostById(fathreId);
+        List<Comment> comments = post.getComment();
+        if(comments == null)return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
+        Comment target = null;
+        for(Comment comment : comments){
+            if(comment.getNo() == no) target = comment;
+        }
+        if(target == null)return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
+
+        comments.remove(target);
+        postService.updateComments(post);
+        return ResultFactory.buildSuccessResult("删除成功！");
+    }
+
+    @Override
     public UpdateResult addComment(Comment comment) {
         Query query=new Query(Criteria.where("id").is(comment.getFatherId()));
         Update update = new Update();
@@ -44,14 +60,12 @@ public class CommentServiceImpl implements CommentService {
         if (comments == null) {
             comment.setNo(0);
         } else{
-            comment.setNo(post.getComment().size());
+            comment.setNo(post.getReplyNum() + 1);
             //notify
             Comment comment1 = findCommentByNo(comment.getFatherId(),comment.getFatherNo());//被评论的评论
             String message = "评论了你的帖子\"" + comment1.getContent()+"\"";
             userService.notify(comment.getAuthor(), comment1.getAuthor(),message,2, comment.getFatherId());
         }
-
-
         update.set("replyNum",post.getReplyNum()+1);
         update.set("latestReplyDate", comment.getCreatedDate());
         update.addToSet("comment", comment);
@@ -61,6 +75,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<Comment> findComment(String fatherId) {
         Post post = mongoTemplate.findById(fatherId, Post.class);
+        if(post.getComment() == null) return null;
         return post.getComment();
     }
 

@@ -152,7 +152,6 @@ public class UserController {
         User user = userService.getUserByUsername(changeAvaterVo.getUsername());
         if(user == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
         user.setAvatarUrl(changeAvaterVo.getAvatarUrl());
-        System.out.println(changeAvaterVo.getAvatarUrl());
         userService.uploadAvater(user);
         return ResultFactory.buildSuccessResult("头像上传成功");
     }
@@ -195,6 +194,12 @@ public class UserController {
 
     @RequestMapping(value = "muteUser", method = RequestMethod.GET)
     public Result muteUser(@RequestParam String username){
+        userService.notify("管理员", username, "已将你禁言！", 3, "mute");
         return userService.muteUser(username);
+    }
+
+    @RequestMapping(value = "allMutedUser", method = RequestMethod.GET)
+    public List<User> allMutedUser(){
+        return userRepository.getByPermission(0);
     }
 }

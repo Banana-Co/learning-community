@@ -5,8 +5,10 @@ import com.mongodb.client.result.UpdateResult;
 import com.x3110.learningcommunity.model.Comment;
 import com.x3110.learningcommunity.model.Post;
 import com.x3110.learningcommunity.model.PostRepository;
+import com.x3110.learningcommunity.model.User;
 import com.x3110.learningcommunity.service.CommentService;
 import com.x3110.learningcommunity.service.PostService;
+import com.x3110.learningcommunity.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -25,6 +27,8 @@ public class PostController {
     CommentService commentService;
     @Autowired
     PostRepository postRepository;
+    @Autowired
+    UserService userService;
 
     @RequestMapping(value = "addPost", method = RequestMethod.POST)
     public UpdateResult addPost(@RequestBody Post post) {
@@ -46,7 +50,14 @@ public class PostController {
     }
 
     @RequestMapping(value = "removePost", method = RequestMethod.GET)
-    public DeleteResult removePost(@RequestParam String id) {
+    public DeleteResult removePost(@RequestParam String id, @RequestParam String actionUsername) {
+        Post post = postService.findPostById(id);
+        String author = post.getAuthor();
+        if(!author.equals(actionUsername)){
+            String message = "删除了你的主题帖子:\"" + post.getContent()+"\"";
+            userService.notify(actionUsername, author, message, 4, "delete");
+            userService.updatePrestige(author, -50);
+        }
         return postService.removePost(id);
     }
 

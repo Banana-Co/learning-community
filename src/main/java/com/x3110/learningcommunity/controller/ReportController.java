@@ -35,7 +35,7 @@ public class ReportController {
     public Result valuableReport(String reportId){
         Report report =reportService.getReportById(reportId);
         userService.updatePrestige(report.getReportUsername(), 20);//举报人加声望
-        userService.updatePrestige(report.getUsernameReported(), 50);//被举报人减声望
+        userService.updatePrestige(report.getUsernameReported(), -50);//被举报人减声望
         return reportService.valuableReport(reportId);
     }
 
