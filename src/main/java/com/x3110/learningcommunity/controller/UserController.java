@@ -187,4 +187,9 @@ public class UserController {
     public Result readAllNotification(@RequestParam String username){
         return userService.readAllNotification(username);
     }
+
+    @RequestMapping(value = "getPermission", method = RequestMethod.GET)
+    public int getPermission(@RequestParam String username){
+        return userService.getPermission(username);
+    }
 }
