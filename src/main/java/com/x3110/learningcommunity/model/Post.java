@@ -22,13 +22,11 @@ public class Post {
 
     private int threadId;//1为课程推荐，2为校园周边，3为刷题
 
-    private int no=0;
-
     private int valid=1;//帖子的有效性，1代表有效，0表示被删除，但依然存在数据库中，只是在页面中不显示了
 
     private int permission; //权限等级
 
-    private int replyNum;
+    private int replyNum = -1;
 
     private int likeNum;
 
@@ -148,14 +146,6 @@ public class Post {
 
     public void setLatestReplyDate(LocalDateTime latestReplyDate) {
         this.latestReplyDate = latestReplyDate;
-    }
-
-    public int getNo() {
-        return no;
-    }
-
-    public void setNo(int no) {
-        this.no = no;
     }
 
     public int getThreadId() {

@@ -36,5 +36,9 @@ public class CommentController {
         return commentService.haveLiked(fatherId, no, username);
     }
 
+    @RequestMapping(value = "deleteComment", method = RequestMethod.GET)
+    public Result deleteComment(@RequestParam String fatherId, @RequestParam int no){
+        return commentService.removeComment(fatherId, no);
+    }
 
 }

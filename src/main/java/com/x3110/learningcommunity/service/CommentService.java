@@ -11,6 +11,7 @@ import javax.security.auth.login.Configuration;
 import java.util.List;
 
 public interface CommentService {
+    Result removeComment(String fatherId, int no);
     UpdateResult addComment(Comment comment);
     List<Comment> findComment(String fatherId);
     Result addLike(String fatherId, int no, String username);
