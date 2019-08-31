@@ -5,6 +5,7 @@ import com.mongodb.client.result.UpdateResult;
 import com.x3110.learningcommunity.model.Comment;
 import com.x3110.learningcommunity.result.Result;
 import com.x3110.learningcommunity.service.CommentService;
+import com.x3110.learningcommunity.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,8 @@ import java.util.List;
 public class CommentController {
     @Autowired
     CommentService commentService;
+    @Autowired
+    UserService userService;
 
     @RequestMapping(value="addComment", method = RequestMethod.POST)
     public UpdateResult addComment(@RequestBody Comment comment) {
@@ -37,7 +40,13 @@ public class CommentController {
     }
 
     @RequestMapping(value = "deleteComment", method = RequestMethod.GET)
-    public Result deleteComment(@RequestParam String fatherId, @RequestParam int no){
+    public Result deleteComment(@RequestParam String fatherId, @RequestParam int no, @RequestParam String actionUsername){
+        Comment comment = commentService.findCommentByNo(fatherId, no);
+        String author = comment.getAuthor();
+        if(!actionUsername.equals(author)){
+            String message = "删除了你的帖子:\"" + comment.getContent()+"\"";
+            userService.notify(actionUsername, author, message, 5, fatherId);
+        }
         return commentService.removeComment(fatherId, no);
     }
 
