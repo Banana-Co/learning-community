@@ -1,6 +1,7 @@
 package com.x3110.learningcommunity.service;
 
 import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import com.x3110.learningcommunity.model.User;
 import com.x3110.learningcommunity.result.Result;
 import org.springframework.context.annotation.Primary;
@@ -29,13 +30,19 @@ public interface UserService {
      */
     User getUserByUsername(String username);
 
-    void uploadAvater(User user);
+    UpdateResult uploadAvater(User user);
 
     DeleteResult deleteUser(String username);
 
     void notify(String username1, String username2, String message, int type, String fatherId);
 
-    Result readNotification(String username, int notiNo);
+    Result readNotification(String username, int nPrisotiNo);
 
     Result readAllNotification(String username);
+
+    UpdateResult updatePrestige(String username, int val);
+
+    int getPermission(String username);
+
+    Result muteUser(String username);
 }

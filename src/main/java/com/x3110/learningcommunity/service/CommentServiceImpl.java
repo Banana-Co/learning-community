@@ -5,6 +5,7 @@ import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import com.x3110.learningcommunity.model.Comment;
 import com.x3110.learningcommunity.model.Post;
+import com.x3110.learningcommunity.model.User;
 import com.x3110.learningcommunity.result.Result;
 import com.x3110.learningcommunity.result.ResultCode;
 import com.x3110.learningcommunity.result.ResultFactory;
@@ -76,6 +77,7 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = post.getComment().get(no);//根据楼层找到comment
         if (comment == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
         String username2 = comment.getAuthor();//接收通知的用户
+        userService.updatePrestige(username2, 1);//声望+1
         String message = "点赞了你的帖子\"" + comment.getContent()+"\"";
 
         List<String> likedUsers = comment.getLikeUsers();

@@ -24,7 +24,7 @@ public class PostController {
     @Autowired
     PostRepository postRepository;
 
-    @RequestMapping(value="addPost", method = RequestMethod.POST)
+    @RequestMapping(value = "addPost", method = RequestMethod.POST)
     public UpdateResult addPost(@RequestBody Post post) {
         postService.addPost(post);
         Comment comment = new Comment();
@@ -35,7 +35,7 @@ public class PostController {
         return commentService.addComment(comment);
     }
 
-    @RequestMapping(value="addPosts", method = RequestMethod.POST)
+    @RequestMapping(value = "addPosts", method = RequestMethod.POST)
     public int addPosts(@RequestBody List<Post> posts) {
         for (Post post : posts) {
             postService.addPost(post);
@@ -43,16 +43,20 @@ public class PostController {
         return 1;
     }
 
-    @RequestMapping(value = "removePost/id={id}", method = RequestMethod.POST)
-    public DeleteResult removePost(@PathVariable (value = "id") String id){
+    @RequestMapping(value = "removePost", method = RequestMethod.GET)
+    public DeleteResult removePost(@RequestParam String id) {
         return postService.removePost(id);
     }
 
-    @RequestMapping(value = "updatePost",method = RequestMethod.POST)
-    public int updatePost(@RequestBody Post post){return postService.updatePost(post);}
+    @RequestMapping(value = "updatePost", method = RequestMethod.POST)
+    public int updatePost(@RequestBody Post post) {
+        return postService.updatePost(post);
+    }
 
-    @RequestMapping(value = "findPostById={id}",method = RequestMethod.GET)
-    public Post findPostById(@PathVariable (value = "id")String id){return postService.findPostById(id);}
+    @RequestMapping(value = "findPostById={id}", method = RequestMethod.GET)
+    public Post findPostById(@PathVariable(value = "id") String id) {
+        return postService.findPostById(id);
+    }
 
     @RequestMapping(value = "getPostByPage", method = RequestMethod.GET)
     public Page<Post> getPostByPage(@RequestParam Integer page, @RequestParam String sortedby, @RequestParam String order) {
@@ -61,7 +65,7 @@ public class PostController {
 
     @RequestMapping(value = "getThreadPostByPage", method = RequestMethod.GET)
     public Page<Post> getThreadPostByPage(@RequestParam Integer page, @RequestParam String sortedby, @RequestParam String order, @RequestParam int threadId) {
-        return postService.findThreadPostByPage(page-1, sortedby, order, threadId);
+        return postService.findThreadPostByPage(page - 1, sortedby, order, threadId);
     }
 
     @RequestMapping(value = "getAll", method = RequestMethod.GET)
@@ -69,13 +73,13 @@ public class PostController {
         return postRepository.findAll();
     }
 
-    @RequestMapping(value ="findPostByKeyword={keyword}",method = RequestMethod.GET)
-    public List<Post> findPostByKeyword(@PathVariable (value = "keyword")String keyword){
+    @RequestMapping(value = "findPostByKeyword={keyword}", method = RequestMethod.GET)
+    public List<Post> findPostByKeyword(@PathVariable(value = "keyword") String keyword) {
         return postRepository.findByTitleLike(keyword);
     }
 
-    @RequestMapping(value = "MyPost={author}",method = RequestMethod.GET)
-    public List<Post> MyPost(@PathVariable(value = "author")String author){
+    @RequestMapping(value = "MyPost={author}", method = RequestMethod.GET)
+    public List<Post> MyPost(@PathVariable(value = "author") String author) {
         return postService.MyPost(author);
     }
 

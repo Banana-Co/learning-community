@@ -1,6 +1,7 @@
 package com.x3110.learningcommunity.service;
 
 import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import com.x3110.learningcommunity.model.Notification;
 import com.x3110.learningcommunity.model.User;
 import com.x3110.learningcommunity.result.Result;
@@ -44,8 +45,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void uploadAvater(User user) {
-        mongoTemplate.save(user);//可能存在稳定性问题，后期考虑是否修改。
+    public UpdateResult uploadAvater(User user) {
+        Query query = new Query(Criteria.where("username").is(user.getUsername()));
+        Update update = new Update();
+        update.set("avatarUrl", user.getAvatarUrl());
+        return mongoTemplate.updateFirst(query, update, User.class);
     }
 
     @Override
@@ -113,5 +117,32 @@ public class UserServiceImpl implements UserService {
             return ResultFactory.buildSuccessResult("全部标为已读！");
         }
         else return ResultFactory.buildFailResult("操作失败！");
+    }
+
+    @Override
+    public UpdateResult updatePrestige(String username, int val) {
+        User user = getUserByUsername(username);
+        Query query = new Query(Criteria.where("username").is(username));
+        Update update = new Update();
+        update.set("prestige", user.getPrestige() + val);
+        return mongoTemplate.updateFirst(query, update, User.class);
+    }
+
+    @Override
+    public int getPermission(String username) {
+        return getUserByUsername(username).getPermission();
+    }
+
+    @Override
+    public Result muteUser(String username) {
+        int p = getPermission(username);
+        if(p == 0)return ResultFactory.buildFailResult("已被禁言");
+        if(p == 2)return ResultFactory.buildFailResult("无法禁言管理员！");
+
+        Query query = new Query(Criteria.where("username").is(username));
+        Update update = new Update();
+        update.set("permission", 0);
+        mongoTemplate.updateFirst(query, update, User.class);
+        return ResultFactory.buildSuccessResult("禁言成功！");
     }
 }
