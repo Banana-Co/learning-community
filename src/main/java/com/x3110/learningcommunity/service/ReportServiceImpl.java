@@ -26,7 +26,7 @@ public class ReportServiceImpl implements ReportService{
 
     @Override
     public Report getReportById(String id) {
-        Query query=new Query(Criteria.where("id").is(id));
+        Query query=new Query(Criteria.where("_id").is(id));
         Report report=mongoTemplate.findOne(query,Report.class);
         return report;
     }
