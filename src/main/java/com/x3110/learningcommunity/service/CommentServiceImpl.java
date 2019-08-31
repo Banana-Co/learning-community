@@ -60,7 +60,7 @@ public class CommentServiceImpl implements CommentService {
         if (comments == null) {
             comment.setNo(0);
         } else{
-            comment.setNo(post.getReplyNum() + 1);
+            comment.setNo(post.getReplyNum());
             //notify
             Comment comment1 = findCommentByNo(comment.getFatherId(),comment.getFatherNo());//被评论的评论
             String message = "评论了你的帖子\"" + comment1.getContent()+"\"";
