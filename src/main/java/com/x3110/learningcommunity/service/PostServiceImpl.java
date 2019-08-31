@@ -7,10 +7,7 @@ import com.x3110.learningcommunity.model.PostRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -19,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -100,6 +98,35 @@ public class PostServiceImpl implements PostService {
         Pageable pageable = PageRequest.of(page, 10, sort);
 
         return postRepository.findByThreadId(threadId, pageable);
+    }
+
+    @Override
+    public List<Post> findPostWithFilter(String field, String value, String sortedby, String order, Integer days) {
+
+        Query query = new Query(Criteria.where(field).is(value).and("createdDate").gte(getStartDate(days)));
+        Sort sort;
+        if (order.equals("asc"))
+            sort = new Sort(Sort.Direction.ASC, sortedby);
+        else
+            sort = new Sort(Sort.Direction.DESC, sortedby);
+        return mongoTemplate.find(query, Post.class);
+    }
+
+    private static LocalDateTime getStartDate(Integer days) {
+        return LocalDateTime.now().minusDays(days);
+    }
+
+    @Override
+    public Page<Post> findPostWithFilterAndPaging(String field, String value, String sortedby, String order, Integer days, int page, int size) {
+        Query query = new Query(Criteria.where(field).is(value).and("createdDate").gte(getStartDate(days)));
+        Sort sort;
+        if (order.equals("asc"))
+            sort = new Sort(Sort.Direction.ASC, sortedby);
+        else
+            sort = new Sort(Sort.Direction.DESC, sortedby);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<Post> postPage = new PageImpl<Post>(mongoTemplate.find(query.with(pageable), Post.class), pageable, mongoTemplate.count(query, Post.class));
+        return postPage;
     }
 
     String escapeExprSpecialWord(String keyword) {
