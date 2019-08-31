@@ -11,6 +11,8 @@ import com.x3110.learningcommunity.service.PostService;
 import com.x3110.learningcommunity.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -72,6 +74,26 @@ public class PostController {
     @RequestMapping(value = "getPostByPage", method = RequestMethod.GET)
     public Page<Post> getPostByPage(@RequestParam Integer page, @RequestParam String sortedby, @RequestParam String order) {
         return postService.findPostByPage(page - 1, sortedby, order);
+    }
+
+    @RequestMapping(value = "findPostWithFilter", method = RequestMethod.GET)
+    public List<Post> findPostWithFilter(@RequestParam(required = false) String field,
+                                        @RequestParam(required = false) String value,
+                                        @RequestParam String sortedby,
+                                        @RequestParam String order,
+                                        @RequestParam Integer days) {
+        return postService.findPostWithFilter(field, value, sortedby, order, days);
+    }
+
+    @RequestMapping(value = "findPostWithFilterAndPaging", method = RequestMethod.GET)
+    public Page<Post> findPostWithFilterAndPaging(@RequestParam(required = false) String field,
+                                         @RequestParam(required = false) String value,
+                                         @RequestParam String sortedby,
+                                         @RequestParam String order,
+                                         @RequestParam Integer days,
+                                         @RequestParam Integer page,
+                                         @RequestParam Integer size) {
+        return postService.findPostWithFilterAndPaging(field, value, sortedby, order, days, page - 1, size);
     }
 
     @RequestMapping(value = "getThreadPostByPage", method = RequestMethod.GET)

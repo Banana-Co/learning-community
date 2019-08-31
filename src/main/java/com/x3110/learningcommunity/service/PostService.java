@@ -13,8 +13,13 @@ public interface PostService {
     int updatePost(Post post);
     Post findPostById(String id);
     Page<Post> findPostByPage(Integer page, String sortedby, String order);
+
+    Page<Post> findPostWithFilterAndPaging(String field, String value, String sortedby, String order, Integer days, int page, int size);
+
     List<Post> MyPost(String author);
     UpdateResult updateComments(Post post);
     Page<Post> findPostByAuthorAndPage(String author, Integer page, Integer size, String sortedby, String order);
     Page<Post> findThreadPostByPage(Integer page, String sortedby, String order, int threadId);
+
+    List<Post> findPostWithFilter(String field, String value, String sortedby, String order, Integer days);
 }
