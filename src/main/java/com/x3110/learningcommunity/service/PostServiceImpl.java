@@ -123,12 +123,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Page<Post> findPostByAuthorAndPage(String author, Integer page, String sortedby, String order) {
+    public Page<Post> findPostByAuthorAndPage(String author, Integer page, Integer size, String sortedby, String order) {
         Pageable pageable;
         if (order.equals("asc"))
-            pageable = PageRequest.of(page, 10, new Sort(Sort.Direction.ASC, sortedby));
+            pageable = PageRequest.of(page, size, new Sort(Sort.Direction.ASC, sortedby));
         else
-            pageable = PageRequest.of(page, 10, new Sort(Sort.Direction.DESC, sortedby));
+            pageable = PageRequest.of(page, size, new Sort(Sort.Direction.DESC, sortedby));
 
         return postRepository.findByAuthor(author, pageable);
     }
