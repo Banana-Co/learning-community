@@ -6,6 +6,9 @@ import com.x3110.learningcommunity.model.Comment;
 import com.x3110.learningcommunity.model.Post;
 import com.x3110.learningcommunity.model.PostRepository;
 import com.x3110.learningcommunity.model.User;
+import com.x3110.learningcommunity.result.Result;
+import com.x3110.learningcommunity.result.ResultCode;
+import com.x3110.learningcommunity.result.ResultFactory;
 import com.x3110.learningcommunity.service.CommentService;
 import com.x3110.learningcommunity.service.PostService;
 import com.x3110.learningcommunity.service.UserService;
@@ -69,6 +72,13 @@ public class PostController {
     @RequestMapping(value = "findPostById={id}", method = RequestMethod.GET)
     public Post findPostById(@PathVariable(value = "id") String id) {
         return postService.findPostById(id);
+    }
+
+    @RequestMapping(value = "postValidation", method = RequestMethod.GET)
+    public Result postValidation(@RequestParam String id){
+        Post post = postService.findPostById(id);
+        if(post == null) return ResultFactory.buildFailResult(ResultCode.NotExist);
+        return ResultFactory.buildSuccessResult("帖子存在！");
     }
 
     @RequestMapping(value = "getPostByPage", method = RequestMethod.GET)
