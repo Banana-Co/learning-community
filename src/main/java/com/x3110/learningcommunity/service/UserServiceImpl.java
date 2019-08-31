@@ -122,10 +122,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UpdateResult updatePrestige(String username, int val) {
         User user = getUserByUsername(username);
-        user.setPrestige(user.getPrestige() + val);
         Query query = new Query(Criteria.where("username").is(username));
         Update update = new Update();
-        update.set("prestige", user.getPrestige());
+        update.set("prestige", user.getPrestige() + val);
         return mongoTemplate.updateFirst(query, update, User.class);
     }
 
@@ -138,6 +137,7 @@ public class UserServiceImpl implements UserService {
     public Result muteUser(String username) {
         int p = getPermission(username);
         if(p == 0)return ResultFactory.buildFailResult("已被禁言");
+        if(p == 2)return ResultFactory.buildFailResult("无法禁言管理员！");
 
         Query query = new Query(Criteria.where("username").is(username));
         Update update = new Update();
