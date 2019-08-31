@@ -81,6 +81,11 @@ public class PostController {
 
     @RequestMapping(value = "findPostByAuthorAndPage",method = RequestMethod.GET)
     public Page<Post> findPostByAuthorAndPage(@RequestParam String author, @RequestParam Integer page, @RequestParam String sortedby, @RequestParam String order){
-        return postService.findPostByAuthorAndPage(author, page - 1, sortedby, order);
+        return postService.findPostByAuthorAndPage(author, page - 1, 10, sortedby, order);
+    }
+
+    @RequestMapping(value = "findLatestPostsByAuthor", method = RequestMethod.GET)
+    public List<Post> findPost(@RequestParam String author) {
+        return postService.findPostByAuthorAndPage(author, 0, 5, "createdDate", "desc").getContent();
     }
 }
