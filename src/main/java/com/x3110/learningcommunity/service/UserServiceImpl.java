@@ -145,4 +145,16 @@ public class UserServiceImpl implements UserService {
         mongoTemplate.updateFirst(query, update, User.class);
         return ResultFactory.buildSuccessResult("禁言成功！");
     }
+
+    @Override
+    public Result unmuteUser(String username){
+        int p = getPermission(username);
+        if(p == 1)return ResultFactory.buildFailResult("已处于自由发言状态！");
+
+        Query query = new Query(Criteria.where("username").is(username));
+        Update update = new Update();
+        update.set("permission", 1);
+        mongoTemplate.updateFirst(query, update, User.class);
+        return ResultFactory.buildSuccessResult("解除禁言成功！");
+    }
 }

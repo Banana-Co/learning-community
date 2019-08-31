@@ -198,6 +198,12 @@ public class UserController {
         return userService.muteUser(username);
     }
 
+    @RequestMapping(value = "unmuteUser", method = RequestMethod.GET)
+    public Result unmuteUser(@RequestParam String username){
+        userService.notify("管理员", username, "已将你解除禁言！", 6, "unmute");
+        return userService.unmuteUser(username);
+    }
+
     @RequestMapping(value = "allMutedUser", method = RequestMethod.GET)
     public List<User> allMutedUser(){
         return userRepository.getByPermission(0);

@@ -45,4 +45,6 @@ public interface UserService {
     int getPermission(String username);
 
     Result muteUser(String username);
+
+    Result unmuteUser(String username);
 }
