@@ -197,4 +197,9 @@ public class UserController {
         userService.notify("管理员", username, "已将你禁言！", 3, "mute");
         return userService.muteUser(username);
     }
+
+    @RequestMapping(value = "allMutedUser", method = RequestMethod.GET)
+    public List<User> allMutedUser(){
+        return userRepository.getByPermission(0);
+    }
 }

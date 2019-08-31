@@ -54,6 +54,7 @@ public class PostController {
         if(!author.equals(actionUsername)){
             String message = "删除了你的主题帖子:\"" + post.getContent()+"\"";
             userService.notify(actionUsername, author, message, 4, "delete");
+            userService.updatePrestige(author, -50);
         }
         return postService.removePost(id);
     }

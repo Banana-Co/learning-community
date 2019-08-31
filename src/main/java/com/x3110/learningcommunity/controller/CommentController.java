@@ -46,6 +46,7 @@ public class CommentController {
         if(!actionUsername.equals(author)){
             String message = "删除了你的帖子:\"" + comment.getContent()+"\"";
             userService.notify(actionUsername, author, message, 5, fatherId);
+            userService.updatePrestige(author, -20);
         }
         return commentService.removeComment(fatherId, no);
     }
