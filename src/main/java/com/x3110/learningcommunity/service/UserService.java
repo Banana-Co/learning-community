@@ -40,7 +40,9 @@ public interface UserService {
 
     Result readAllNotification(String username);
 
-    UpdateResult updatePrestige(User user);
+    UpdateResult updatePrestige(String username, int val);
 
     int getPermission(String username);
+
+    Result muteUser(String username);
 }

@@ -77,9 +77,7 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = post.getComment().get(no);//根据楼层找到comment
         if (comment == null) return ResultFactory.buildFailResult(ResultCode.NOT_FOUND);
         String username2 = comment.getAuthor();//接收通知的用户
-        User user = userService.getUserByUsername(username2);
-        user.setPrestige(user.getPrestige()+1);//声望+1
-        userService.updatePrestige(user);//更新声望
+        userService.updatePrestige(username2, 1);//声望+1
         String message = "点赞了你的帖子\"" + comment.getContent()+"\"";
 
         List<String> likedUsers = comment.getLikeUsers();

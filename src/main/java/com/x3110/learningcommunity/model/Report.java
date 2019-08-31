@@ -8,19 +8,21 @@ import java.time.LocalDateTime;
 @Document(collection = "report")
 public class Report {
     @Id
-    String Id;
+    private String Id;
 
-    String reportUsername;//举报用户
+    private String reportUsername;//举报用户
 
-    String usernameReported;//被举报用户
+    private String usernameReported;//被举报用户
 
-    String fatherId;//帖子Id
+    private String fatherId;//帖子Id
 
-    int no;//楼层
+    private int no;//楼层
 
-    String reason;
+    private String reason;
 
-    LocalDateTime createdDate;
+    private LocalDateTime createdDate;
+
+    private int done = 0;
 
     public String getId() {
         return Id;
@@ -76,5 +78,13 @@ public class Report {
 
     public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public int getDone() {
+        return done;
+    }
+
+    public void setDone(int done) {
+        this.done = done;
     }
 }

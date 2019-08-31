@@ -192,4 +192,9 @@ public class UserController {
     public int getPermission(@RequestParam String username){
         return userService.getPermission(username);
     }
+
+    @RequestMapping(value = "muteUser", method = RequestMethod.GET)
+    public Result muteUser(@RequestParam String username){
+        return userService.muteUser(username);
+    }
 }
