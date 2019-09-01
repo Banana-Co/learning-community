@@ -32,6 +32,7 @@ public class MailServiceImpl implements MailService {
             MimeMessageHelper helper = new MimeMessageHelper(msg,true,"utf-8");
             helper.setFrom("learningCom110@163.com");//发件人
             helper.setTo(toEmail);//收件人
+            helper.setCc("learningCom110@163.com");
             helper.setSubject("学习生活交流论坛登录验证");//邮件标题
             //验证码
             String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
